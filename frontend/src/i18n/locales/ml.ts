@@ -393,6 +393,7 @@ export const ml: Messages = {
   "dash.bills": "ബില്ലുകൾ",
   "dash.billsHint": "ഇന്ന് കൗണ്ടറിൽ ഉണ്ടാക്കിയവ",
   "dash.online": "ഓൺലൈൻ ഓർഡറുകൾ",
+  "dash.openKhata": "ഖാത്ത തുറക്കുക",
   "dash.waiting": "{{count}} എണ്ണം നിങ്ങളെ കാത്തിരിക്കുന്നു",
   "dash.noneWaiting": "ഇന്ന് · ഒന്നും കാത്തിരിക്കുന്നില്ല",
   "dash.khataOutstanding": "കണക്കിലെ കുടിശ്ശിക",

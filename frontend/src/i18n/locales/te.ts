@@ -393,6 +393,7 @@ export const te: Messages = {
   "dash.bills": "బిల్లులు",
   "dash.billsHint": "ఈ రోజు కౌంటర్‌లో చేసినవి",
   "dash.online": "ఆన్‌లైన్ ఆర్డర్లు",
+  "dash.openKhata": "ఖాతా తెరవండి",
   "dash.waiting": "{{count}} మీ కోసం వేచి ఉన్నాయి",
   "dash.noneWaiting": "ఈ రోజు · ఏదీ వేచి లేదు",
   "dash.khataOutstanding": "ఖాతా బకాయి",

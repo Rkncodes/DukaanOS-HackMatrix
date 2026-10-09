@@ -133,10 +133,11 @@ export function CounterPage({
   return (
     <>
       <PageHeader
+        quiet
         title={t("counter.title")}
         subtitle={t("counter.subtitle")}
         actions={
-          // The ways to add items, as one compact switcher beside the title. Vision leads: it is what the Counter is built around.
+          // The ways to add items, as one compact switcher leading the page. Vision leads: it is what the Counter is built around.
           <div role="group" aria-label={t("counter.billingMode")} className="flex max-w-full flex-wrap gap-0.5 rounded-3xl bg-white p-1">
             {MODES.map((m) => {
               const on = m.mode === visionMode;
@@ -169,7 +170,7 @@ export function CounterPage({
         */}
         <div
           className={`min-w-0 rounded-3xl bg-white p-4 sm:p-5 ${
-            visionMode === null ? "lg:flex lg:h-[calc(100vh-11.5rem)] lg:min-h-[30rem] lg:flex-col" : "lg:self-start"
+            visionMode === null ? "lg:flex lg:h-[calc(100vh-11rem)] lg:min-h-[30rem] lg:flex-col" : "lg:self-start"
           }`}
         >
           <p className="mb-4 flex items-start gap-2 px-1 text-sm text-slate-500">

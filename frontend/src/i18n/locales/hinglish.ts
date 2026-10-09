@@ -393,6 +393,7 @@ export const hinglish: Messages = {
   "dash.bills": "Bills",
   "dash.billsHint": "aaj counter par bane",
   "dash.online": "Online orders",
+  "dash.openKhata": "Khata kholein",
   "dash.waiting": "{{count}} aapka intezaar kar rahe hain",
   "dash.noneWaiting": "aaj · koi intezaar mein nahi",
   "dash.khataOutstanding": "Khata bakaya",

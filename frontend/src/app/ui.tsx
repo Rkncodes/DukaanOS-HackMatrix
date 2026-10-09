@@ -9,10 +9,11 @@ export function FullPageMessage({ children }: { children: ReactNode }) {
   return <div className="flex min-h-screen items-center justify-center text-sm text-slate-500">{children}</div>;
 }
 
-export function PageHeader({ title, subtitle, actions }: { title: string; subtitle?: string; actions?: ReactNode }) {
+/** `quiet` keeps the title and subtitle for screen readers only, so the actions lead the page from the left. */
+export function PageHeader({ title, subtitle, actions, quiet = false }: { title: string; subtitle?: string; actions?: ReactNode; quiet?: boolean }) {
   return (
     <header className="mb-5 flex flex-wrap items-end justify-between gap-x-4 gap-y-3">
-      <div className="min-w-0">
+      <div className={quiet ? "sr-only" : "min-w-0"}>
         <h1 className="text-xl font-semibold tracking-tight text-slate-900">{title}</h1>
         {subtitle && <p className="mt-1 text-sm text-slate-500">{subtitle}</p>}
       </div>
@@ -60,6 +61,7 @@ export function Stat({
   icon,
   tone = "slate",
   emphasis = false,
+  actions,
 }: {
   label: string;
   value: ReactNode;
@@ -69,6 +71,8 @@ export function Stat({
   tone?: Tone;
   /** The one figure a page leads with: it is set larger and fills the space it is given. */
   emphasis?: boolean;
+  /** Shortcuts shown under the figure. */
+  actions?: ReactNode;
 }) {
   const strong = tone === "red" ? "text-red-600" : tone === "amber" ? "text-amber-700" : "text-slate-900";
   return (
@@ -76,6 +80,7 @@ export function Stat({
       <div className="pr-10 text-sm text-slate-500">{label}</div>
       <div className={`font-semibold tracking-tight tabular-nums ${emphasis ? "mt-4 text-5xl" : "mt-2 text-2xl"} ${strong}`}>{value}</div>
       {hint && <div className={`leading-relaxed text-slate-500 ${emphasis ? "mt-3 text-sm" : "mt-1 text-xs"}`}>{hint}</div>}
+      {actions && <div className="mt-6 flex flex-wrap gap-2">{actions}</div>}
       {icon && (
         <span className={`absolute rounded-full ${emphasis ? "right-6 top-6 p-2.5" : "right-4 top-4 p-2"} ${TONES[tone]}`}>
           <Icon name={icon} className="h-4 w-4" />

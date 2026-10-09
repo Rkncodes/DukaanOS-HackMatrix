@@ -700,7 +700,7 @@ describe.each(["en", "ml"] as const)("Dashboard, Opportunities and Analytics in 
     expect(await screen.findByRole("heading", { name: say("nav.dashboard"), level: 1 })).toBeTruthy();
     expect(screen.getByText(say("dash.subtitle"))).toBeTruthy();
     for (const key of ["dash.salesToday", "dash.bills", "dash.online", "dash.khataOutstanding"] as const)
-      expect(screen.getByText(say(key)), key).toBeTruthy();
+      expect(screen.getAllByText(say(key)).length, key).toBeGreaterThan(0); // Online orders is a card and a shortcut
     expect(
       await screen.findByText(`${say("dash.completedSales.one", { count: 1 })} · ${say("dash.trend.above", { pct: 12 })}`),
     ).toBeTruthy();

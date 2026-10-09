@@ -48,6 +48,8 @@ function trendHint(pct: number | null, t: ReturnType<typeof useTranslation>["t"]
  * The merchant's command centre: today's numbers, what happened, and what is waiting for them. Every figure
  * is read from the same bills, orders, stock and khata the other sections work on. Nothing is estimated.
  */
+const shortcut = "rounded-full border border-emerald-600 px-4 py-2 text-sm font-medium text-emerald-700 hover:bg-emerald-50";
+
 export function DashboardPage() {
   const { t, language, dateLocale } = useTranslation();
   const time = (iso: string) => new Date(iso).toLocaleTimeString(dateLocale, { hour: "numeric", minute: "2-digit" });
@@ -91,6 +93,19 @@ export function DashboardPage() {
             orders.data &&
             summary.data &&
             `${t(sold.length === 1 ? "dash.completedSales.one" : "dash.completedSales.other", { count: sold.length })}${more} · ${trendHint(summary.data.sales_trend_pct, t)}`
+          }
+          actions={
+            <>
+              <Link to="/counter" className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
+                {t("receipt.newBill")}
+              </Link>
+              <Link to="/khata" className={shortcut}>
+                {t("dash.openKhata")}
+              </Link>
+              <Link to="/shop/orders" className={shortcut}>
+                {t("dash.online")}
+              </Link>
+            </>
           }
         />
         </div>

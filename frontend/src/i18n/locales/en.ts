@@ -399,6 +399,7 @@ export const en = {
   "dash.bills": "Bills",
   "dash.billsHint": "made at the counter today",
   "dash.online": "Online orders",
+  "dash.openKhata": "Open khata",
   "dash.waiting": "{{count}} waiting for you",
   "dash.noneWaiting": "today · none waiting",
   "dash.khataOutstanding": "Khata outstanding",

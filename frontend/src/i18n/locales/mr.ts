@@ -393,6 +393,7 @@ export const mr: Messages = {
   "dash.bills": "बिले",
   "dash.billsHint": "आज काउंटरवर केलेली",
   "dash.online": "ऑनलाइन ऑर्डर",
+  "dash.openKhata": "खाते उघडा",
   "dash.waiting": "{{count}} तुमची वाट पाहत आहेत",
   "dash.noneWaiting": "आज · कोणतीही वाट पाहत नाही",
   "dash.khataOutstanding": "खात्याची थकबाकी",

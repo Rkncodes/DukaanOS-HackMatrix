@@ -39,11 +39,11 @@
 
   /* Lime: the one highlight. The section you are in, and what deserves a second look. Always carries dark
      green text; never the colour of a primary action. */
-  --color-lime-50: #f6fbe9;
-  --color-lime-100: #ecf7d3;
-  --color-lime-200: #dcf1ad;
-  --color-lime-300: #c3e87c;
-  --color-lime-400: #a8d758;
+  --color-lime-50: #f3f9ee;
+  --color-lime-100: #e7f3dd;
+  --color-lime-200: #d7ebc8;
+  --color-lime-300: #c2e0ad;
+  --color-lime-400: #a5cf8b;
 
   /* Between xl and 2xl: wide enough for the Counter to show its six billing modes in one row. */
   --breakpoint-wide: 87.5rem;

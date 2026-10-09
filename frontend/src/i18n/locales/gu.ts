@@ -393,6 +393,7 @@ export const gu: Messages = {
   "dash.bills": "બિલ",
   "dash.billsHint": "આજે કાઉન્ટર પર બનેલાં",
   "dash.online": "ઓનલાઇન ઓર્ડર",
+  "dash.openKhata": "ખાતું ખોલો",
   "dash.waiting": "{{count}} તમારી રાહ જુએ છે",
   "dash.noneWaiting": "આજે · કોઈ રાહમાં નથી",
   "dash.khataOutstanding": "ખાતાની બાકી",

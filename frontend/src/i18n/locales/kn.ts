@@ -393,6 +393,7 @@ export const kn: Messages = {
   "dash.bills": "ಬಿಲ್‌ಗಳು",
   "dash.billsHint": "ಇಂದು ಕೌಂಟರ್‌ನಲ್ಲಿ ಮಾಡಿದವು",
   "dash.online": "ಆನ್‌ಲೈನ್ ಆರ್ಡರ್‌ಗಳು",
+  "dash.openKhata": "ಖಾತೆ ತೆರೆಯಿರಿ",
   "dash.waiting": "{{count}} ನಿಮಗಾಗಿ ಕಾಯುತ್ತಿವೆ",
   "dash.noneWaiting": "ಇಂದು · ಯಾವುದೂ ಕಾಯುತ್ತಿಲ್ಲ",
   "dash.khataOutstanding": "ಖಾತೆ ಬಾಕಿ",

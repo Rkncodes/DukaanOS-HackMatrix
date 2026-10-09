@@ -94,7 +94,11 @@ function load() {
   return { user, router };
 }
 
-const stat = (label: string) => screen.getByText(label).parentElement!.textContent;
+/** A figure's card by its label (the label of a card is a plain line, never one of the shortcut links). */
+const stat = (label: string) => screen.getAllByText(label).find((el) => el.tagName !== "A")!.parentElement!.textContent;
+/** The shortcuts under the sales figure: [name, where it leads]. */
+const shortcuts = () =>
+  within(screen.getAllByText("Today's sales")[0].parentElement!).getAllByRole("link").map((a) => [a.textContent, a.getAttribute("href")]);
 const page = () => within(screen.getByRole("main"));
 /** The dashboard with its orders loaded. */
 const ready = () => screen.findByText("Counter bill #AAAA1111");
@@ -106,7 +110,8 @@ describe("Dashboard", () => {
 
     // Today: two completed counter bills (one on khata) and one online order still pending. Last week's do not count.
     // The sales figure and its trend come from the insights summary; the completed-sale count still comes from today's orders.
-    expect(stat("Today's sales")).toBe("Today's sales₹200.002 completed sales · 13% above last week's daily average");
+    expect(stat("Today's sales")).toBe("Today's sales₹200.002 completed sales · 13% above last week's daily averageNew billOpen khataOnline orders");
+    expect(shortcuts()).toEqual([["New bill", "/counter"], ["Open khata", "/khata"], ["Online orders", "/shop/orders"]]); // prettier-ignore
     expect(stat("Bills")).toBe("Bills2made at the counter today");
     expect(stat("Online orders")).toBe("Online orders12 waiting for you"); // both pending orders wait, old or new
     expect(stat("Khata outstanding")).toBe("Khata outstanding₹1,270.002 customers owe you"); // advance is not owed
@@ -158,7 +163,7 @@ describe("Dashboard", () => {
     load();
     expect(await screen.findByText("Nothing needs your attention right now.")).toBeTruthy();
     expect(page().getByText(/No bills or orders yet today/)).toBeTruthy();
-    expect(stat("Today's sales")).toBe("Today's sales₹0.000 completed sales · no sales last week to compare");
+    expect(stat("Today's sales")).toBe("Today's sales₹0.000 completed sales · no sales last week to compareNew billOpen khataOnline orders");
     expect(stat("Online orders")).toBe("Online orders0today · none waiting");
     // The last bill is shown as what it is: earlier, not today.
     const earlier = page().getByText("Earlier").nextElementSibling!;

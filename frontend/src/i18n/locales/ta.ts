@@ -393,6 +393,7 @@ export const ta: Messages = {
   "dash.bills": "பில்கள்",
   "dash.billsHint": "இன்று கவுண்டரில் போட்டவை",
   "dash.online": "ஆன்லைன் ஆர்டர்கள்",
+  "dash.openKhata": "கணக்கைத் திற",
   "dash.waiting": "{{count}} உங்களுக்காகக் காத்திருக்கின்றன",
   "dash.noneWaiting": "இன்று · எதுவும் காத்திருக்கவில்லை",
   "dash.khataOutstanding": "கணக்கு நிலுவை",

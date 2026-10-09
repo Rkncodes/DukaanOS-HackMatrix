@@ -393,6 +393,7 @@ export const hi: Messages = {
   "dash.bills": "बिल",
   "dash.billsHint": "आज काउंटर पर बने",
   "dash.online": "ऑनलाइन ऑर्डर",
+  "dash.openKhata": "खाता खोलें",
   "dash.waiting": "{{count}} आपका इंतज़ार कर रहे हैं",
   "dash.noneWaiting": "आज · कोई इंतज़ार में नहीं",
   "dash.khataOutstanding": "खाते का बकाया",

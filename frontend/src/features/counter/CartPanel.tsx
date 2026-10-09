@@ -58,7 +58,7 @@ export function CartPanel({ counter, products, onCompleted }: Props) {
   }
 
   return (
-    <section className="flex flex-col overflow-hidden rounded-3xl bg-white lg:[@media(min-height:820px)]:max-h-[calc(100vh-11.5rem)]">
+    <section className="flex flex-col overflow-hidden rounded-3xl bg-white lg:[@media(min-height:820px)]:max-h-[calc(100vh-11rem)]">
       <div className="border-b border-slate-100 px-5 py-4">
         <h2 className="mb-2 text-xs font-medium text-slate-500">{t("cart.customer")}</h2>
         <CustomerPicker
