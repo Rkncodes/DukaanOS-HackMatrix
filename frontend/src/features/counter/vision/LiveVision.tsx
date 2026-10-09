@@ -163,9 +163,9 @@ export function LiveVision({ cart, onConfirm, onClose, scanIntervalMs = SCAN_INT
   const boxes = tracks.map((t) => ({ ...t.detection, id: t.key }));
 
   return (
-    <section aria-label={t("counter.mode.live.name")} className="rounded-xl border border-slate-200 bg-white p-4">
+    <section aria-label={t("counter.mode.live.name")} className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
       <div className="mb-3 flex items-center justify-between gap-2">
-        <h2 className="text-lg font-semibold text-slate-900">
+        <h2 className="text-base font-semibold text-slate-900">
           {t("counter.mode.live.name")}{" "}
           {phase === "live" && (
             <span className="ml-1 rounded-full bg-emerald-50 px-2 py-0.5 align-middle text-xs font-medium text-emerald-700">● {t("live.live")}</span>
@@ -174,7 +174,7 @@ export function LiveVision({ cart, onConfirm, onClose, scanIntervalMs = SCAN_INT
         <button
           type="button"
           onClick={stop}
-          className="rounded-md border border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
+          className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
         >
           {t("camera.stop")}
         </button>
@@ -231,7 +231,7 @@ export function LiveVision({ cart, onConfirm, onClose, scanIntervalMs = SCAN_INT
       )}
       {provider && !provider.isMock && (
         <p className="mt-3 text-xs text-slate-500" role="note" aria-label={t("live.provider")}>
-          <span className="rounded bg-slate-100 px-1.5 py-0.5 font-medium text-slate-700">{t("live.model")}</span>{" "}
+          <span className="rounded-md bg-slate-100 px-1.5 py-0.5 font-medium text-slate-700">{t("live.model")}</span>{" "}
           <code>{provider.name}</code> · {t("live.fromCamera")}
         </p>
       )}
@@ -244,7 +244,7 @@ export function LiveVision({ cart, onConfirm, onClose, scanIntervalMs = SCAN_INT
       {phase !== "error" && (
         <>
           <div className="mb-1 mt-4 flex items-baseline justify-between">
-            <h3 className="text-sm font-semibold text-slate-700">{t("live.onCounterNow")}</h3>
+            <h3 className="text-sm font-semibold text-slate-900">{t("live.onCounterNow")}</h3>
             <span className="text-xs text-slate-400">{t("live.nothingBilled")}</span>
           </div>
           {tracks.length === 0 ? (
@@ -343,7 +343,7 @@ function TrackRow({
         disabled={busy}
         onClick={onAdd}
         aria-label={t("live.addQuantity", { quantity: formatQuantity(String(remaining)), name: product.name })}
-        className="rounded-md bg-emerald-600 px-3 py-1 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+        className="rounded-lg bg-emerald-600 px-3 py-1 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
       >
         {more ? t("live.addMore", { count: remaining }) : t("live.addTimes", { count: remaining })}
       </button>
@@ -361,7 +361,7 @@ function TrackRow({
       <div className="min-w-0">
         <div className="flex items-center gap-1.5">
           {track.status === "new" && (
-            <span className="rounded bg-emerald-100 px-1 text-[10px] font-semibold uppercase text-emerald-800">{t("live.new")}</span>
+            <span className="rounded-md bg-emerald-100 px-1 text-[10px] font-semibold uppercase text-emerald-800">{t("live.new")}</span>
           )}
           <span className={`truncate font-medium ${d.match === "unmatched" ? "text-slate-500" : "text-slate-900"}`}>
             {d.match === "unmatched" ? t("live.unknown", { title }) : name}

@@ -45,10 +45,10 @@ export function PhotoReview({ products, onConfirm, onClose }: Props) {
   const result = recognize.data;
 
   return (
-    <section aria-label={t("counter.mode.photo.name")} className="rounded-lg border border-slate-200 bg-white p-4">
+    <section aria-label={t("counter.mode.photo.name")} className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="font-medium text-slate-900">{t("counter.mode.photo.name")}</h2>
-        <button type="button" onClick={onClose} className="text-sm text-slate-500 hover:text-slate-800">
+        <h2 className="text-base font-semibold text-slate-900">{t("counter.mode.photo.name")}</h2>
+        <button type="button" onClick={onClose} className="-mr-2 rounded-md px-2 py-1 text-sm text-slate-500 hover:bg-slate-100 hover:text-slate-900">
           {t("common.cancel")}
         </button>
       </div>
@@ -68,7 +68,7 @@ export function PhotoReview({ products, onConfirm, onClose }: Props) {
         type="button"
         onClick={() => fileRef.current?.click()}
         disabled={recognize.isPending}
-        className="rounded-md border border-slate-300 px-3 py-2 text-sm font-medium hover:bg-slate-50 disabled:opacity-50"
+        className="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50"
       >
         {file ? t("review.chooseAnother") : t("photo.choose")}
       </button>
@@ -79,7 +79,7 @@ export function PhotoReview({ products, onConfirm, onClose }: Props) {
       )}
 
       {previewUrl && (
-        <div className="relative mt-3 w-full max-w-sm overflow-hidden rounded border border-slate-200">
+        <div className="relative mt-3 w-full max-w-sm overflow-hidden rounded-md border border-slate-200">
           <img src={previewUrl} alt={t("photo.uploaded")} className="block w-full" />
           <DetectionOverlay detections={rows.map((r) => r.detection)} />
         </div>

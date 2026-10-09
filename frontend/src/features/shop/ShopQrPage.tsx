@@ -30,7 +30,7 @@ export function ShopQrPage() {
   return (
     <div className="grid gap-4 lg:grid-cols-[minmax(0,26rem)_1fr]">
       {/* The code itself: what gets printed and put on the counter. */}
-      <section aria-label={t("qr.yourQr")} className="rounded-xl border border-slate-200 bg-white p-6">
+      <section aria-label={t("qr.yourQr")} className="rounded-2xl border border-slate-200 bg-white p-6">
         <div className="flex flex-col items-center gap-3 text-center print:p-8">
           <div className="text-xl font-semibold text-slate-900">{session.merchant.store_name}</div>
           <div className="rounded-2xl border-2 border-slate-900 bg-white p-3">
@@ -69,7 +69,7 @@ export function ShopQrPage() {
             <button
               type="button"
               onClick={copy}
-              className="rounded-lg border border-slate-300 px-3 py-1.5 text-sm font-medium hover:bg-slate-50"
+              className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50"
             >
               {copied ? t("qr.copied") : t("qr.copy")}
             </button>

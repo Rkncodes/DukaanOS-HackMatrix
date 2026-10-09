@@ -1,1 +1,81 @@
 @import "tailwindcss";
+
+/*
+ * DukaanOS design tokens. The app is styled with Tailwind utilities and uses two colour families throughout:
+ * `slate` for every neutral (page, surfaces, borders, text) and `emerald` for the brand and every primary
+ * action. Their values are set here, so the whole product shares one palette: a calm, slightly warm neutral
+ * and a deep shop-green. `red` (a problem) and `amber` (needs a look) keep Tailwind's own values.
+ */
+@theme {
+  --font-sans: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", "Noto Sans",
+    sans-serif;
+
+  /* Neutrals: 100 is the page, white the surfaces, 200 the hairlines, 500+ the text. */
+  --color-slate-50: #f7f8f5;
+  --color-slate-100: #f0f2ed;
+  --color-slate-200: #e3e6df;
+  --color-slate-300: #cfd4ca;
+  --color-slate-400: #8d9488;
+  --color-slate-500: #677064;
+  --color-slate-600: #4b5348;
+  --color-slate-700: #363d34;
+  --color-slate-800: #232923;
+  --color-slate-900: #141914;
+  --color-slate-950: #0b0e0b;
+
+  /* Brand green: 600 is the primary action, 700 its hover, 50/100 the quiet tints behind selected things. */
+  --color-emerald-50: #eef6ef;
+  --color-emerald-100: #dcedde;
+  --color-emerald-200: #bcdcc1;
+  --color-emerald-300: #8fc49a;
+  --color-emerald-400: #58a56d;
+  --color-emerald-500: #2f8755;
+  --color-emerald-600: #176b47;
+  --color-emerald-700: #12573a;
+  --color-emerald-800: #0f4630;
+  --color-emerald-900: #0c3826;
+  --color-emerald-950: #062116;
+
+  /* Between xl and 2xl: wide enough for the Counter to show its six billing modes in one row. */
+  --breakpoint-wide: 87.5rem;
+
+  /* One family of corners: controls (md), tiles and notices (lg), surfaces (xl, 2xl). */
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.875rem;
+  --radius-2xl: 1.125rem;
+
+  --shadow-sm: 0 1px 2px rgb(20 25 20 / 0.05);
+  --shadow-lg: 0 12px 28px -8px rgb(20 25 20 / 0.16), 0 2px 6px rgb(20 25 20 / 0.05);
+  --shadow-xl: 0 24px 48px -12px rgb(20 25 20 / 0.22);
+}
+
+@layer base {
+  body {
+    background-color: var(--color-slate-100);
+    color: var(--color-slate-800);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  button:not(:disabled),
+  summary,
+  [role="radio"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::placeholder {
+    color: var(--color-slate-400);
+  }
+
+  /* One visible keyboard focus everywhere; controls that draw their own ring say so with a utility. */
+  :focus-visible {
+    outline: 2px solid var(--color-emerald-600);
+    outline-offset: 2px;
+  }
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline-offset: 0;
+  }
+}

@@ -19,11 +19,11 @@ export function CatalogueSummary() {
   ];
 
   return (
-    <dl className="mb-4 grid grid-cols-3 gap-3">
+    <dl className="mb-4 grid grid-cols-3 gap-3 sm:gap-4">
       {figures.map(({ label, value, warn }) => (
-        <div key={label} className="rounded-xl border border-slate-200 bg-white p-4">
-          <dt className="text-xs font-medium uppercase tracking-wide text-slate-500">{label}</dt>
-          <dd className={`mt-1 text-2xl font-semibold tabular-nums ${products.data && value > 0 && warn ? warn : "text-slate-900"}`}>
+        <div key={label} className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+          <dt className="text-sm text-slate-500">{label}</dt>
+          <dd className={`mt-2 text-2xl font-semibold tracking-tight tabular-nums ${products.data && value > 0 && warn ? warn : "text-slate-900"}`}>
             {products.data ? value : "–"}
           </dd>
         </div>

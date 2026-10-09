@@ -28,7 +28,7 @@ function BalanceTable({ rows, action }: { rows: Balance[]; action: (row: Balance
   const { t, dateLocale } = useTranslation();
   const day = (iso: string) => new Date(iso).toLocaleDateString(dateLocale, { day: "2-digit", month: "short", year: "numeric" });
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
       <table className="w-full text-left text-sm">
         <thead className="text-slate-500">
           <tr>
@@ -151,7 +151,7 @@ export function KhataPaymentsPage() {
             action={(row) => (
               <Link
                 to={`/khata/${row.customer_id}?record=payment`}
-                className="inline-block rounded-md bg-emerald-600 px-3 py-1.5 font-medium text-white hover:bg-emerald-700"
+                className="inline-block rounded-lg bg-emerald-600 px-3 py-1.5 font-semibold text-white hover:bg-emerald-700"
                 aria-label={t("khata.recordPaymentFrom", { name: row.customer_name })}
               >
                 {t("khata.recordPayment")}

@@ -15,9 +15,9 @@ type Method = Schemas["PaymentMethod"];
 // Paytm is not offered here: it is only ever recorded after Paytm's own verification.
 const PAID_BY = ["cash", "upi", "card"] as const satisfies readonly Method[];
 
-const input = "w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none";
-const primary = "rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50";
-const secondary = "rounded-md border border-slate-300 px-4 py-2 text-sm font-medium hover:bg-slate-50 disabled:opacity-50";
+const input = "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
+const primary = "rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50";
+const secondary = "rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
 
 /** One customer's khata: what they owe, the ledger behind that number, and recording udhaar or a payment. */
 export function KhataCustomerPage() {
@@ -67,7 +67,7 @@ export function KhataCustomerPage() {
           {customer.name.trim().charAt(0).toUpperCase()}
         </span>
         <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-900">{customer.name}</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-slate-900">{customer.name}</h1>
           <p className="text-sm text-slate-500">{customer.phone ?? t("customer.noPhone")}</p>
         </div>
       </header>

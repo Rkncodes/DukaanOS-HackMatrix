@@ -3,8 +3,8 @@ import { Card, PageHeader } from "../../app/ui";
 import { APP_LANGUAGES, setAppLanguage, useTranslation, type AppLanguage } from "../../i18n";
 import { useSession, useUpdateMerchant } from "../auth/session";
 
-const input = "w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none";
-const primary = "rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50";
+const input = "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
+const primary = "rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50";
 
 /** Store profile fields the owner can change after registration. Today: just the GSTIN, shown on every bill once set. */
 export function SettingsPage() {

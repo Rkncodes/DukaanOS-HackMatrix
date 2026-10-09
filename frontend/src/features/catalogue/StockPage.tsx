@@ -6,8 +6,8 @@ import { formatQuantity } from "../../lib/format";
 import { STOCK_LEVEL, stockLevel, useAdjustStock, type Product } from "./api";
 import { CatalogueSummary } from "./CatalogueSummary";
 
-const input = "rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none";
-const secondary = "rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium hover:bg-slate-50 disabled:opacity-50";
+const input = "rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
+const secondary = "rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
 
 /** What needs the merchant first comes first: out of stock, then low, then the rest. */
 const URGENCY = { out: 0, low: 1, ok: 2 };
@@ -100,7 +100,7 @@ function AdjustForm({ product, onDone }: { product: Product; onDone: () => void 
       <button type="button" className={secondary} disabled={adjust.isPending || !(Number(quantity) > 0)} onClick={() => send(-1)}>
         {t("stock.remove")}
       </button>
-      <button type="button" className="text-sm text-slate-500 hover:text-slate-800" onClick={onDone}>
+      <button type="button" className="-mr-2 rounded-md px-2 py-1 text-sm text-slate-500 hover:bg-slate-100 hover:text-slate-900" onClick={onDone}>
         {t("common.cancel")}
       </button>
       {adjust.error && (

@@ -37,7 +37,7 @@ export function StorefrontPage() {
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t("store.searchPlaceholder")}
         aria-label={t("products.search")}
-        className="w-full rounded-md border border-slate-300 bg-white px-3 py-2"
+        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus:border-emerald-600 focus:outline-none"
       />
       {store.categories.length > 0 && (
         <div role="group" aria-label={t("nav.categories")} className="mt-3 flex gap-2 overflow-x-auto pb-1">
@@ -81,7 +81,7 @@ export function StorefrontPage() {
         <div className="fixed inset-x-0 bottom-0 border-t border-slate-200 bg-white p-3">
           <Link
             to={`/store/${slug}/cart`}
-            className="mx-auto block max-w-xl rounded-md bg-emerald-600 py-3 text-center font-semibold text-white hover:bg-emerald-700"
+            className="mx-auto block max-w-xl rounded-xl bg-emerald-600 py-3 text-center font-semibold text-white hover:bg-emerald-700"
           >
             {t(cart.count === 1 ? "store.viewCart.one" : "store.viewCart.other", { count: cart.count, amount: formatINR(cart.total) })}
           </Link>
@@ -106,7 +106,7 @@ function ProductCard({
   return (
     <li aria-label={product.name} className="flex flex-col rounded-lg border border-slate-200 bg-white p-3">
       {product.image_url && (
-        <img src={product.image_url} alt="" loading="lazy" className="mb-2 h-24 w-full rounded object-contain" />
+        <img src={product.image_url} alt="" loading="lazy" className="mb-2 h-24 w-full rounded-md object-contain" />
       )}
       {category && <div className="text-xs text-slate-500">{category}</div>}
       <div className="font-medium text-slate-900">{product.name}</div>

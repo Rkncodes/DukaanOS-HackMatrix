@@ -112,8 +112,8 @@ export function DashboardPage() {
         />
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="min-w-0 lg:col-span-2">
           <Card
             title={t("dash.activity")}
             action={
@@ -139,14 +139,14 @@ export function DashboardPage() {
             {today.length > 10 && <p className="mt-2 text-xs text-slate-500">{t("dash.latest10")}</p>}
             {earlier.length > 0 && (
               <>
-                <h3 className="mb-1 mt-4 text-xs font-medium uppercase tracking-wide text-slate-400">{t("dash.earlier")}</h3>
+                <h3 className="mb-1 mt-4 text-xs font-medium text-slate-500">{t("dash.earlier")}</h3>
                 <ActivityList orders={earlier} when={dayAndTime} />
               </>
             )}
           </Card>
         </div>
 
-        <div className="space-y-4">
+        <div className="min-w-0 space-y-4">
           <Card
             title={t("dash.attention")}
             action={
@@ -252,7 +252,7 @@ function NeedsAttention({ items, loading }: { items: (Attention | false)[]; load
             <button
               type="button"
               onClick={item.onDismiss}
-              className="shrink-0 rounded px-1.5 py-1 text-xs text-slate-400 hover:bg-slate-100 hover:text-slate-600"
+              className="shrink-0 rounded-md px-1.5 py-1 text-xs text-slate-400 hover:bg-slate-100 hover:text-slate-600"
             >
               {t("common.dismiss")}
             </button>
@@ -269,13 +269,13 @@ function SalaahkaarCard() {
   const shell = useShell();
   const status = useAssistantStatus();
   return (
-    <section aria-label={t("dash.salaahkaar")} className="rounded-xl bg-emerald-700 p-4 text-white">
-      <div className="flex items-center gap-2 text-xs font-medium uppercase tracking-wide text-emerald-100">
+    <section aria-label={t("dash.salaahkaar")} className="rounded-2xl bg-emerald-700 p-5 text-white">
+      <div className="flex items-center gap-2 text-xs font-medium text-emerald-100">
         <Icon name="sparkle" className="h-4 w-4" />
         {t("dash.salaahkaar")}
       </div>
-      <h2 className="mt-2 text-lg font-semibold">{t("dash.askAnything")}</h2>
-      <p className="mt-0.5 text-sm text-emerald-50">{t("dash.askTopics")}</p>
+      <h2 className="mt-3 text-lg font-semibold tracking-tight">{t("dash.askAnything")}</h2>
+      <p className="mt-1 text-sm text-emerald-100">{t("dash.askTopics")}</p>
       {status.data && !status.data.available && (
         <p role="note" className="mt-3 rounded-lg bg-emerald-800/60 px-3 py-2 text-xs text-emerald-50">
           {t("dash.notAnswering")} {status.data.reason}
@@ -284,7 +284,7 @@ function SalaahkaarCard() {
       <button
         type="button"
         onClick={() => shell?.openAssistant()}
-        className="mt-3 rounded-full bg-white px-4 py-2 text-sm font-semibold text-emerald-800 hover:bg-emerald-50"
+        className="mt-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-emerald-800 hover:bg-emerald-50"
       >
         {t("shell.askSalaahkaar")}
       </button>

@@ -99,10 +99,10 @@ export function BarcodeScan({ products, cartItems, onAdd, onRefresh, onClose, sc
   }
 
   return (
-    <section aria-label={t("counter.mode.barcode.name")} className="flex flex-col rounded-xl border border-slate-200 bg-white p-4">
+    <section aria-label={t("counter.mode.barcode.name")} className="flex flex-col rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
       <div className="order-1 mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-slate-900">{t("counter.mode.barcode.name")}</h2>
-        <button type="button" onClick={onClose} className="text-sm text-slate-500 hover:text-slate-800">
+        <h2 className="text-base font-semibold text-slate-900">{t("counter.mode.barcode.name")}</h2>
+        <button type="button" onClick={onClose} className="-mr-2 rounded-md px-2 py-1 text-sm text-slate-500 hover:bg-slate-100 hover:text-slate-900">
           {t("common.cancel")}
         </button>
       </div>
@@ -111,7 +111,7 @@ export function BarcodeScan({ products, cartItems, onAdd, onRefresh, onClose, sc
         <CameraScan onDetected={(detected) => submit(detected.trim())} scanEveryMs={scanEveryMs} />
       </div>
 
-      <div className="order-4 my-4 flex items-center gap-3 text-xs font-medium uppercase tracking-wide text-slate-400">
+      <div className="order-4 my-4 flex items-center gap-3 text-xs font-medium text-slate-500">
         <span className="h-px flex-1 bg-slate-200" />
         {t("barcode.or")}
         <span className="h-px flex-1 bg-slate-200" />
@@ -131,7 +131,7 @@ export function BarcodeScan({ products, cartItems, onAdd, onRefresh, onClose, sc
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder={t("barcode.placeholder")}
-            className="w-full rounded-lg border border-slate-300 px-3 py-3 font-mono text-lg tracking-wider focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-3 font-mono text-lg tracking-wider focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100"
           />
           <button
             type="submit"

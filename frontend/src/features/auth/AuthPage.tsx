@@ -4,7 +4,7 @@ import { useTranslation } from "../../i18n";
 import { ApiError } from "../../lib/api/client";
 import { useLogin, useRegister } from "./session";
 
-const input = "w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none";
+const input = "w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100";
 const DEMO = { email: "ramesh@dukaanos.dev", password: "demo1234" };
 
 export function AuthPage() {
@@ -37,16 +37,16 @@ export function AuthPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
-      <div className="w-full max-w-sm rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+    <div className="flex min-h-screen items-center justify-center bg-slate-100 p-4">
+      <div className="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
         <div className="flex items-center gap-2.5">
-          <span className="rounded-lg bg-emerald-600 p-1.5 text-white">
+          <span className="rounded-xl bg-emerald-600 p-2 text-white">
             <Icon name="store" className="h-5 w-5" />
           </span>
-          <h1 className="text-xl font-bold tracking-tight text-slate-900">DukaanOS</h1>
+          <h1 className="text-xl font-semibold tracking-tight text-slate-900">DukaanOS</h1>
         </div>
-        <p className="mt-1 text-sm text-slate-500">{t("app.productLine")}</p>
-        <p className="mb-4 mt-5 text-sm font-medium text-slate-700">
+        <p className="mt-2 text-sm text-slate-500">{t("app.productLine")}</p>
+        <p className="mb-3 mt-6 text-sm font-medium text-slate-900">
           {mode === "login" ? t("auth.loginTitle") : t("auth.registerTitle")}
         </p>
 
@@ -78,7 +78,7 @@ export function AuthPage() {
           <button
             type="submit"
             disabled={active.isPending}
-            className="rounded-md bg-emerald-600 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-60"
+            className="mt-1 rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60"
           >
             {active.isPending ? t("auth.pleaseWait") : mode === "login" ? t("auth.logIn") : t("auth.createAccount")}
           </button>
@@ -91,7 +91,7 @@ export function AuthPage() {
         >
           {mode === "login" ? t("auth.toRegister") : t("auth.toLogin")}
         </button>
-        {mode === "login" && <p className="mt-4 text-xs text-slate-400">{t("auth.demo", DEMO)}</p>}
+        {mode === "login" && <p className="mt-4 border-t border-slate-100 pt-4 text-xs text-slate-500">{t("auth.demo", DEMO)}</p>}
       </div>
     </div>
   );

@@ -133,14 +133,19 @@ export function CounterPage({
   return (
     <>
       <PageHeader title={t("counter.title")} subtitle={t("counter.subtitle")} />
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_380px]">
-        <div>
-          {/* The ways to add items, always in reach. Vision leads: it is what the Counter is built around. */}
-          <div role="group" aria-label={t("counter.billingMode")} className="mb-3 grid grid-cols-2 gap-2 sm:grid-cols-3 2xl:grid-cols-6">
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_23rem] xl:grid-cols-[minmax(0,1fr)_25rem] xl:gap-6">
+        {/* Manual billing fills the screen's height: the product list scrolls inside it and the bill stays beside it. */}
+        <div className={`min-w-0 ${visionMode === null ? "lg:flex lg:h-[calc(100vh-11.5rem)] lg:min-h-[34rem] lg:flex-col" : ""}`}>
+          {/* The ways to add items, always in reach, as one switcher. Vision leads: it is what the Counter is built around. */}
+          <div
+            role="group"
+            aria-label={t("counter.billingMode")}
+            className="mb-3 grid grid-cols-2 gap-1 rounded-2xl border border-slate-200 bg-white p-1.5 sm:grid-cols-3 wide:grid-cols-6"
+          >
             {MODES.map((m) => {
               const on = m.mode === visionMode;
               // Offered once the products are loaded: every mode adds items from the catalogue.
-              if (!products.data) return <div key={m.name} className="h-[58px] rounded-xl border border-slate-200 bg-white" />;
+              if (!products.data) return <div key={m.name} className="h-[52px] rounded-xl bg-slate-50" />;
               return (
                 <button
                   key={m.name}
@@ -148,22 +153,20 @@ export function CounterPage({
                   aria-label={text(m.id, "name")}
                   aria-pressed={on}
                   onClick={() => setVisionMode(m.mode)}
-                  className={`flex items-center gap-2.5 rounded-xl border px-3 py-2.5 text-left ${
-                    on
-                      ? "border-emerald-600 bg-emerald-600 text-white shadow-sm"
-                      : "border-slate-200 bg-white text-slate-700 hover:border-emerald-400 hover:bg-emerald-50"
+                  className={`flex min-w-0 flex-col justify-center gap-0.5 rounded-xl px-3 py-2 text-left leading-tight ${
+                    on ? "bg-emerald-600 text-white" : "text-slate-700 hover:bg-slate-100"
                   }`}
                 >
-                  <Icon name={m.icon} className={`h-5 w-5 ${on ? "text-white" : "text-emerald-600"}`} />
-                  <span className="min-w-0 leading-tight">
-                    <span className="block text-sm font-semibold">{text(m.id, "label")}</span>
-                    <span className={`block truncate text-xs ${on ? "text-emerald-50" : "text-slate-500"}`}>{text(m.id, "hint")}</span>
+                  <span className="flex w-full min-w-0 items-center gap-2">
+                    <Icon name={m.icon} className={`h-4 w-4 ${on ? "text-white" : "text-slate-400"}`} />
+                    <span className="truncate text-sm font-semibold">{text(m.id, "label")}</span>
                   </span>
+                  <span className={`w-full truncate text-xs ${on ? "text-emerald-100" : "text-slate-500"}`}>{text(m.id, "hint")}</span>
                 </button>
               );
             })}
           </div>
-          <p className="mb-3 flex items-start gap-2 text-sm text-slate-600">
+          <p className="mb-4 flex items-start gap-2 px-1 text-sm text-slate-500">
             <Icon name={active.icon} className="mt-0.5 h-4 w-4 text-slate-400" />
             {text(active.id, "how")}
           </p>
@@ -204,7 +207,7 @@ export function CounterPage({
             />
           )}
           {products.data && visionMode === null && (
-            <div className="rounded-xl border border-slate-200 bg-white p-4">
+            <div className="flex min-h-0 flex-1 flex-col rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
               <ProductPicker
                 products={products.data}
                 cartItems={counter.cart?.items ?? []}
@@ -214,7 +217,7 @@ export function CounterPage({
             </div>
           )}
         </div>
-        <div className="lg:sticky lg:top-4 lg:self-start">
+        <div className="lg:sticky lg:top-[5.5rem] lg:self-start">
           <CartPanel counter={counter} products={products.data} onCompleted={setReceipt} />
         </div>
       </div>

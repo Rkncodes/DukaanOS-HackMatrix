@@ -5,9 +5,12 @@ import { formatINR, formatQuantity } from "../../lib/format";
 import { STOCK_LEVEL, stockLevel, useAllProducts, useCategories, useSaveProduct, useSetProductActive, type Category, type Product } from "./api";
 import { CatalogueSummary } from "./CatalogueSummary";
 
-const input = "w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none";
-const primary = "rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50";
-const secondary = "rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium hover:bg-slate-50 disabled:opacity-50";
+const input = "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
+const primary = "rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50";
+const secondary = "rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
+/** The actions repeated on every row of the table: quieter than a button that stands alone. */
+const rowAction =
+  "whitespace-nowrap rounded-md px-2.5 py-1.5 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900 disabled:opacity-50";
 
 /** The GST slabs actually used in India. A merchant can still type another rate if theirs isn't here. */
 const GST_SLABS = ["0", "5", "12", "18", "28"];
@@ -82,18 +85,18 @@ export function ProductsPage() {
           </p>
         )}
         {shown.length > 0 && (
-          <div className="overflow-x-auto">
+          <div className="relative overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="text-xs uppercase tracking-wide text-slate-500">
+              <thead className="text-xs font-medium text-slate-500">
                 <tr>
-                  <th className="py-1.5 font-medium">{t("products.col.product")}</th>
-                  <th className="py-1.5 font-medium">{t("products.col.category")}</th>
-                  <th className="py-1.5 font-medium">{t("products.col.barcode")}</th>
-                  <th className="py-1.5 text-right font-medium">{t("products.col.price")}</th>
-                  <th className="py-1.5 text-right font-medium">{t("products.col.gst")}</th>
-                  <th className="py-1.5 text-right font-medium">{t("products.col.inStock")}</th>
-                  <th className="py-1.5 pl-4 font-medium">{t("products.col.status")}</th>
-                  <th className="py-1.5 text-right font-medium">
+                  <th className="pb-2 font-medium">{t("products.col.product")}</th>
+                  <th className="pb-2 font-medium">{t("products.col.category")}</th>
+                  <th className="pb-2 font-medium">{t("products.col.barcode")}</th>
+                  <th className="pb-2 text-right font-medium">{t("products.col.price")}</th>
+                  <th className="pb-2 text-right font-medium">{t("products.col.gst")}</th>
+                  <th className="pb-2 text-right font-medium">{t("products.col.inStock")}</th>
+                  <th className="pb-2 pl-4 font-medium">{t("products.col.status")}</th>
+                  <th className="pb-2 text-right font-medium">
                     <span className="sr-only">{t("products.col.actions")}</span>
                   </th>
                 </tr>
@@ -101,30 +104,30 @@ export function ProductsPage() {
               <tbody className="divide-y divide-slate-100">
                 {shown.map((p) => (
                   <tr key={p.id} aria-label={p.name} className={p.is_active ? "" : "text-slate-400"}>
-                    <td className="py-2 font-medium">
+                    <td className="py-2.5 font-medium">
                       {p.name}
                       {!p.is_active && <span className="ml-2 rounded-full bg-slate-100 px-2 py-0.5 text-xs font-normal">{t("products.offSale")}</span>}
                     </td>
-                    <td className="py-2">{categoryName(p.category_id)}</td>
-                    <td className="py-2 font-mono text-xs">{p.barcode}</td>
-                    <td className="py-2 text-right">
+                    <td className="py-2.5">{categoryName(p.category_id)}</td>
+                    <td className="py-2.5 font-mono text-xs">{p.barcode}</td>
+                    <td className="py-2.5 text-right">
                       {formatINR(p.price)} / {p.unit}
                     </td>
-                    <td className="py-2 text-right tabular-nums text-slate-500">
+                    <td className="py-2.5 text-right tabular-nums text-slate-500">
                       {Number(p.tax_rate) > 0 ? `${formatQuantity(p.tax_rate)}%` : "—"}
                     </td>
-                    <td className="py-2 text-right tabular-nums">{formatQuantity(p.stock_quantity)}</td>
-                    <td className="py-2 pl-4">
+                    <td className="py-2.5 text-right tabular-nums">{formatQuantity(p.stock_quantity)}</td>
+                    <td className="py-2.5 pl-4">
                       <Badge tone={STOCK_LEVEL[stockLevel(p)].tone}>{t(STOCK_LEVEL[stockLevel(p)].key)}</Badge>
                     </td>
-                    <td className="py-2 text-right">
-                      <div className="flex justify-end gap-2">
-                        <button type="button" className={secondary} onClick={() => setEditing(p)}>
+                    <td className="py-2.5 text-right">
+                      <div className="flex justify-end gap-1">
+                        <button type="button" className={rowAction} onClick={() => setEditing(p)}>
                           {t("products.edit")}
                         </button>
                         <button
                           type="button"
-                          className={secondary}
+                          className={rowAction}
                           disabled={setActive.isPending}
                           onClick={() => setActive.mutate({ id: p.id, active: !p.is_active })}
                         >

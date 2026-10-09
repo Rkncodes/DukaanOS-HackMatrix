@@ -72,7 +72,7 @@ export function CheckoutPage() {
             maxLength={120}
             autoComplete="name"
             onChange={(e) => setName(e.target.value)}
-            className="w-full rounded-md border border-slate-300 px-3 py-2"
+            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus:border-emerald-600 focus:outline-none"
           />
         </div>
         <div>
@@ -105,7 +105,7 @@ export function CheckoutPage() {
       <button
         type="submit"
         disabled={!phoneOk || order.isPending}
-        className="mt-4 w-full rounded-md bg-emerald-600 py-3 font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+        className="mt-4 w-full rounded-xl bg-emerald-600 py-3 font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
       >
         {order.isPending ? t("store.placing") : t("store.place", { amount: formatINR(cart.total) })}
       </button>

@@ -23,8 +23,8 @@ const STATUS_EDGE: Record<Status, string> = {
 // Paytm is not offered here: it is only ever recorded after Paytm's own verification.
 const PAID_BY = ["cash", "upi", "card"] as const satisfies readonly Method[];
 
-const primary = "rounded-md bg-emerald-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50";
-const secondary = "rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium hover:bg-slate-50 disabled:opacity-50";
+const primary = "rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50";
+const secondary = "rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
 
 /**
  * Orders customers placed on the storefront. This merchant's only: the backend scopes the list to the
@@ -55,7 +55,7 @@ export function ShopOrdersPage({ pollMs = ORDERS_POLL_MS }: { pollMs?: number } 
   const section = (title: string, list: Order[]) =>
     list.length > 0 && (
       <section aria-label={title} className="mb-6">
-        <h2 className="mb-2 text-sm font-semibold text-slate-700">
+        <h2 className="mb-2 text-sm font-semibold text-slate-900">
           {title} ({list.length})
         </h2>
         <ul className="grid gap-3 lg:grid-cols-2">
@@ -198,7 +198,7 @@ function OrderCard({
                 value={paidBy}
                 onChange={(e) => setPaidBy(e.target.value as Method)}
                 aria-label={t("orders.paidByOrder", { number })}
-                className="rounded-md border border-slate-300 px-2 py-1.5"
+                className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 focus:border-emerald-600 focus:outline-none"
               >
                 {PAID_BY.map((m) => (
                   <option key={m} value={m}>

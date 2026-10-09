@@ -191,7 +191,7 @@ export function SalaahkaarPanel({ open, onClose }: { open: boolean; onClose: () 
 
           {turns.length === 0 && !ask.isPending && (
             <div>
-              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+              <h3 className="mb-2 text-xs font-medium text-slate-500">
                 {t("salaahkaar.tryAsking")}
                 {hindiEcho && (
                   <>
@@ -270,7 +270,7 @@ export function SalaahkaarPanel({ open, onClose }: { open: boolean; onClose: () 
               rows={2}
               maxLength={500}
               placeholder="Aaj kitni bikri hui?"
-              className="w-full resize-none rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+              className="w-full resize-none rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
             />
             <button
               type="submit"

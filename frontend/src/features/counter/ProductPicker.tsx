@@ -51,8 +51,8 @@ export function ProductPicker({ products, cartItems, onAdd, busy }: Props) {
   }
 
   return (
-    <div className="flex min-h-0 flex-col">
-      <label htmlFor="counter-scan" className="mb-1 block text-sm font-medium text-slate-600">
+    <div className="flex min-h-0 flex-1 flex-col">
+      <label htmlFor="counter-scan" className="mb-1.5 block text-sm font-medium text-slate-700">
         {t("picker.label")}
       </label>
       <input
@@ -75,30 +75,30 @@ export function ProductPicker({ products, cartItems, onAdd, busy }: Props) {
           }
         }}
         placeholder={t("picker.placeholder")}
-        className="w-full rounded-md border border-slate-300 px-3 py-2.5 text-base focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100"
       />
-      <p className="mt-1 h-5 text-sm text-red-600" role="status">
+      <p className="mt-1.5 min-h-5 text-sm text-red-600" role="status">
         {message}
       </p>
 
-      <ul aria-label={t("picker.products")} className="mt-2 grid grid-cols-1 gap-2 overflow-y-auto sm:grid-cols-2 xl:grid-cols-3">
+      <ul aria-label={t("picker.products")} className="-mx-1 mt-1 grid min-h-0 flex-1 auto-rows-max grid-cols-1 gap-2 overflow-y-auto px-1 pb-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
         {matches.map((p) => {
           const left = available.get(p.id) ?? 0;
           return (
-            <li key={p.id}>
+            <li key={p.id} className="flex">
               <button
                 type="button"
                 disabled={busy || soldOut(p.id)}
                 onClick={() => void add({ product_id: p.id, source: "manual" })}
-                className="flex w-full flex-col rounded-lg border border-slate-200 bg-white p-3 text-left hover:border-emerald-400 hover:bg-emerald-50 disabled:opacity-60"
+                className="flex w-full flex-col justify-between gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-left hover:border-emerald-400 hover:bg-emerald-50 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:opacity-60"
               >
-                <span className="font-medium text-slate-900">{p.name}</span>
-                <span className="mt-1 flex items-baseline justify-between text-sm">
-                  <span className="font-semibold text-emerald-700">
+                <span className="text-sm font-medium leading-snug text-slate-900">{p.name}</span>
+                <span className="flex items-baseline justify-between gap-2 text-sm">
+                  <span className="font-semibold tabular-nums text-slate-900">
                     {formatINR(p.price)}
                     <span className="font-normal text-slate-400"> / {p.unit}</span>
                   </span>
-                  <span className={left <= 0 ? "text-red-600" : "text-slate-500"}>
+                  <span className={`whitespace-nowrap text-xs ${left <= 0 ? "font-medium text-red-600" : "text-slate-500"}`}>
                     {t("picker.left", { quantity: formatQuantity(String(left)) })}
                   </span>
                 </span>
@@ -106,7 +106,7 @@ export function ProductPicker({ products, cartItems, onAdd, busy }: Props) {
             </li>
           );
         })}
-        {matches.length === 0 && <li className="text-sm text-slate-500">{t("picker.noMatch")}</li>}
+        {matches.length === 0 && <li className="col-span-full py-8 text-center text-sm text-slate-500">{t("picker.noMatch")}</li>}
       </ul>
     </div>
   );

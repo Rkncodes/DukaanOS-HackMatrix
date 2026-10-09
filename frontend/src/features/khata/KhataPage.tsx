@@ -6,7 +6,7 @@ import { useKhataBalances } from "../../lib/api/queries";
 import { formatINR } from "../../lib/format";
 import { describeBalance, useCreateCustomer } from "./api";
 
-const input = "rounded-lg border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none";
+const input = "rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
 
 /** Every customer of this merchant with what they owe, computed by the backend from the khata ledger. */
 export function KhataPage() {
@@ -64,9 +64,9 @@ export function KhataPage() {
           <p className="py-4 text-center text-sm text-slate-500">{t("khata.noCustomerMatches", { text: query.trim() })}</p>
         )}
         {shown.length > 0 && (
-          <div className="overflow-x-auto">
+          <div className="relative overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="text-xs uppercase tracking-wide text-slate-500">
+              <thead className="text-xs font-medium text-slate-500">
                 <tr>
                   <th className="py-1.5 font-medium">{t("cart.customer")}</th>
                   <th className="py-1.5 font-medium">{t("khata.col.phone")}</th>
@@ -116,7 +116,7 @@ export function KhataPage() {
                           <Link
                             to={`/khata/${b.customer_id}?record=credit`}
                             aria-label={t("khata.recordCreditFor", { name: b.customer_name })}
-                            className="whitespace-nowrap rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
+                            className="whitespace-nowrap rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-50"
                           >
                             {t("khata.giveCredit")}
                           </Link>
@@ -173,7 +173,7 @@ function AddCustomer() {
         <button
           type="submit"
           disabled={create.isPending || !name.trim()}
-          className="rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50"
+          className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
         >
           {t("khata.addCustomer")}
         </button>

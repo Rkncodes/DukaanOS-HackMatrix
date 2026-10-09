@@ -58,9 +58,9 @@ export function CartPanel({ counter, products, onCompleted }: Props) {
   }
 
   return (
-    <section className="flex flex-col overflow-hidden rounded-xl border border-slate-200 border-t-4 border-t-emerald-600 bg-white shadow-sm">
-      <div className="border-b border-slate-100 p-4">
-        <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">{t("cart.customer")}</h2>
+    <section className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white lg:[@media(min-height:700px)]:max-h-[calc(100vh-11.5rem)]">
+      <div className="border-b border-slate-100 px-5 py-4">
+        <h2 className="mb-2 text-xs font-medium text-slate-500">{t("cart.customer")}</h2>
         <CustomerPicker
           customerId={cart?.customer_id ?? null}
           onChange={(id) => setCustomer.mutate(id)}
@@ -68,10 +68,12 @@ export function CartPanel({ counter, products, onCompleted }: Props) {
         />
       </div>
 
-      <div className="flex-1 p-4">
-        <h2 className="mb-2 text-base font-semibold text-slate-900">{t("cart.bill")}</h2>
+      {/* The lines scroll under the heading; the customer above and the totals below stay where they are. */}
+      <div className="flex min-h-0 flex-1 flex-col">
+        <h2 className="border-b border-slate-100 px-5 pb-3 pt-4 text-sm font-semibold text-slate-900">{t("cart.bill")}</h2>
+        <div className="min-h-0 flex-1 overflow-y-auto px-5 pb-4">
         {items.length === 0 ? (
-          <p className="py-8 text-center text-sm text-slate-400">{t("cart.empty")}</p>
+          <p className="py-10 text-center text-sm text-slate-500">{t("cart.empty")}</p>
         ) : (
           <ul className="divide-y divide-slate-100">
             {items.map((item) => (
@@ -90,8 +92,8 @@ export function CartPanel({ counter, products, onCompleted }: Props) {
         {lineError && <p className="mt-2 text-sm text-red-600">{lineError.message}</p>}
 
         {!!crossSell.data?.length && (
-          <div className="mt-3 rounded-lg border border-dashed border-emerald-300 bg-emerald-50 p-3">
-            <h3 className="mb-2 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-emerald-800">
+          <div className="mt-3 rounded-xl bg-emerald-50 p-3">
+            <h3 className="mb-2 flex items-center gap-1.5 text-xs font-medium text-emerald-800">
               <Icon name="sparkle" className="h-3.5 w-3.5" />
               {t("cart.crossSell")}
             </h3>
@@ -105,11 +107,11 @@ export function CartPanel({ counter, products, onCompleted }: Props) {
                       type="button"
                       disabled={editing || checkout.isPending || locked || soldOut}
                       onClick={() => counter.addItem.mutate({ product_id: s.product_id, source: "manual" })}
-                      className="flex items-center gap-1.5 rounded-full border border-emerald-300 bg-white px-3 py-1.5 text-sm text-emerald-800 hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-50"
+                      className="flex items-center gap-1.5 rounded-full border border-emerald-200 bg-white px-3 py-1 text-sm text-slate-800 hover:border-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       {s.name}
-                      <span className="text-emerald-600">{formatINR(s.price)}</span>
-                      <span aria-hidden="true" className="font-semibold">+</span>
+                      <span className="text-slate-500">{formatINR(s.price)}</span>
+                      <span aria-hidden="true" className="font-semibold text-emerald-700">+</span>
                     </button>
                   </li>
                 );
@@ -117,20 +119,21 @@ export function CartPanel({ counter, products, onCompleted }: Props) {
             </ul>
           </div>
         )}
+        </div>
       </div>
 
-      <div className="space-y-3 border-t border-slate-200 bg-slate-50 p-4">
-        <dl className="space-y-1 text-sm">
+      <div className="space-y-3 border-t border-slate-200 bg-slate-50 px-5 py-4">
+        <dl className="space-y-1.5 text-sm">
           <div className="flex justify-between">
             <dt className="text-slate-500">{t("cart.subtotal")}</dt>
-            <dd>{formatINR(totals.subtotal)}</dd>
+            <dd className="tabular-nums text-slate-900">{formatINR(totals.subtotal)}</dd>
           </div>
           {!!cart?.tax_summary && Number(cart.tax_summary.total_tax) > 0 && (
-            <div className="flex justify-between text-xs text-slate-400">
+            <div className="flex justify-between gap-3 text-xs text-slate-500">
               <dt>
                 {t("cart.includesGst", { cgst: formatINR(cart.tax_summary.cgst), sgst: formatINR(cart.tax_summary.sgst) })}
               </dt>
-              <dd>{formatINR(cart.tax_summary.total_tax)}</dd>
+              <dd className="tabular-nums">{formatINR(cart.tax_summary.total_tax)}</dd>
             </div>
           )}
           <div className="flex items-center justify-between">
@@ -145,13 +148,13 @@ export function CartPanel({ counter, products, onCompleted }: Props) {
                 onChange={(e) => setDiscount(e.target.value)}
                 disabled={locked}
                 placeholder="0"
-                className="w-24 rounded border border-slate-300 bg-white px-2 py-1 text-right text-sm"
+                className="h-8 w-24 rounded-lg border border-slate-300 bg-white px-2 text-right text-sm tabular-nums focus:border-emerald-600 focus:outline-none disabled:bg-slate-100"
               />
             </dd>
           </div>
-          <div className="flex items-baseline justify-between border-t border-slate-200 pt-2 font-semibold text-slate-900">
-            <dt className="text-base">{t("cart.total")}</dt>
-            <dd className="text-2xl tabular-nums">{totals.ok ? formatINR(totals.total) : "–"}</dd>
+          <div className="flex items-baseline justify-between border-t border-slate-200 pt-3 font-semibold text-slate-900">
+            <dt className="text-sm">{t("cart.total")}</dt>
+            <dd className="text-2xl tracking-tight tabular-nums">{totals.ok ? formatINR(totals.total) : "–"}</dd>
           </div>
         </dl>
         {!totals.ok && <p className="text-sm text-red-600">{totals.error}</p>}
@@ -169,10 +172,10 @@ export function CartPanel({ counter, products, onCompleted }: Props) {
               aria-checked={method === m}
               disabled={locked}
               onClick={() => setMethod(m)}
-              className={`rounded-md border px-2 py-2 text-sm font-medium ${
+              className={`truncate rounded-lg border px-1 py-2 text-sm font-medium disabled:cursor-not-allowed ${
                 method === m
-                  ? "border-emerald-600 bg-emerald-600 text-white"
-                  : "border-slate-300 bg-white text-slate-700 hover:bg-slate-50"
+                  ? "border-emerald-600 bg-emerald-50 text-emerald-800"
+                  : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:text-slate-900"
               }`}
             >
               {t(`cart.method.${m}` as MessageKey)}
@@ -194,7 +197,7 @@ export function CartPanel({ counter, products, onCompleted }: Props) {
             type="button"
             disabled={!canCheckout}
             onClick={submit}
-            className="w-full rounded-md bg-emerald-600 py-3 text-base font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+            className="w-full rounded-xl bg-emerald-600 py-3 text-base font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
           >
             {checkout.isPending
               ? t("cart.completing")
@@ -239,24 +242,24 @@ function CartLine({
   }
 
   return (
-    <li className="py-2">
-      <div className="flex items-start justify-between gap-2">
+    <li className="py-3">
+      <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="truncate font-medium text-slate-900">{item.product_name}</div>
-          <div className="text-xs text-slate-500">
+          <div className="truncate text-sm font-medium text-slate-900" title={item.product_name}>{item.product_name}</div>
+          <div className="mt-0.5 text-xs text-slate-500">
             {t("cart.each", { price: formatINR(item.unit_price) })}
-            {item.source !== "manual" && <span className="ml-1 rounded bg-slate-100 px-1">{label("source", item.source)}</span>}
+            {item.source !== "manual" && <span className="ml-1.5 rounded-full bg-slate-100 px-1.5 py-0.5">{label("source", item.source)}</span>}
           </div>
         </div>
-        <div className="shrink-0 font-medium">{formatINR(item.line_total)}</div>
+        <div className="shrink-0 text-sm font-semibold tabular-nums text-slate-900">{formatINR(item.line_total)}</div>
       </div>
-      <div className="mt-1 flex items-center gap-1">
+      <div className="mt-2 flex items-center gap-1">
         <button
           type="button"
           aria-label={t("cart.decrease", { name: item.product_name })}
           disabled={disabled}
           onClick={() => (quantity > 1 ? onQuantity(String(quantity - 1)) : onRemove())}
-          className="h-7 w-7 rounded border border-slate-300 text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+          className="h-8 w-8 rounded-md border border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
         >
           −
         </button>
@@ -268,14 +271,14 @@ function CartLine({
           onChange={(e) => setDraft(e.target.value)}
           onBlur={commit}
           onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-          className="h-7 w-14 rounded border border-slate-300 text-center text-sm"
+          className="h-8 w-12 rounded-md border border-slate-200 text-center text-sm tabular-nums focus:border-emerald-600 focus:outline-none"
         />
         <button
           type="button"
           aria-label={t("cart.increase", { name: item.product_name })}
           disabled={disabled || (stock !== undefined && quantity + 1 > stock)}
           onClick={() => onQuantity(String(quantity + 1))}
-          className="h-7 w-7 rounded border border-slate-300 text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+          className="h-8 w-8 rounded-md border border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 disabled:opacity-50"
         >
           +
         </button>
@@ -283,13 +286,13 @@ function CartLine({
           type="button"
           disabled={disabled}
           onClick={onRemove}
-          className="ml-auto text-xs text-slate-400 hover:text-red-600 disabled:opacity-50"
+          className="ml-auto rounded-md px-2 py-1 text-xs text-slate-500 hover:bg-red-50 hover:text-red-700 disabled:opacity-50"
         >
           {t("common.remove")}
         </button>
       </div>
       {available !== undefined && (
-        <p className="mt-1 text-xs text-amber-700">{t("cart.onlyInStock", { quantity: formatQuantity(available) })}</p>
+        <p className="mt-1.5 text-xs text-amber-700">{t("cart.onlyInStock", { quantity: formatQuantity(available) })}</p>
       )}
     </li>
   );

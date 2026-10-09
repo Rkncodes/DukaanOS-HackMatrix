@@ -37,10 +37,10 @@ export function CustomerPicker({ customerId, onChange, disabled }: Props) {
   if (selected) {
     const balance = balanceOf(selected.id);
     return (
-      <div className="flex items-center justify-between rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm">
-        <div>
-          <div className="font-medium text-slate-900">{selected.name}</div>
-          <div className="text-slate-500">
+      <div className="flex items-center justify-between gap-3 rounded-xl bg-emerald-50 px-3.5 py-2.5 text-sm">
+        <div className="min-w-0">
+          <div className="truncate font-medium text-slate-900">{selected.name}</div>
+          <div className="text-xs text-slate-600">
             {selected.phone ?? t("customer.noPhone")}
             {balance !== undefined && Number(balance) !== 0 && (
               <span className={Number(balance) > 0 ? "text-red-600" : ""}> · {t("customer.khata", { amount: formatINR(balance) })}</span>
@@ -51,7 +51,7 @@ export function CustomerPicker({ customerId, onChange, disabled }: Props) {
           type="button"
           disabled={disabled}
           onClick={() => onChange(null)}
-          className="text-slate-500 hover:text-slate-800 disabled:opacity-50"
+          className="shrink-0 rounded-md px-2 py-1 text-xs text-slate-600 hover:bg-white hover:text-slate-900 disabled:opacity-50"
         >
           {t("common.remove")}
         </button>
@@ -77,10 +77,10 @@ export function CustomerPicker({ customerId, onChange, disabled }: Props) {
         onFocus={() => setOpen(true)}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
         placeholder={t("customer.placeholder")}
-        className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none"
+        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100 disabled:bg-slate-50"
       />
       {open && (
-        <ul className="absolute z-10 mt-1 w-full overflow-hidden rounded-md border border-slate-200 bg-white text-sm shadow-lg">
+        <ul className="absolute z-10 mt-1.5 w-full overflow-hidden rounded-xl border border-slate-200 bg-white py-1 text-sm shadow-lg">
           {matches.map((c) => (
             <li key={c.id}>
               <button
@@ -91,7 +91,7 @@ export function CustomerPicker({ customerId, onChange, disabled }: Props) {
                   setQuery("");
                   setOpen(false);
                 }}
-                className="flex w-full justify-between px-3 py-2 text-left hover:bg-slate-50"
+                className="flex w-full justify-between gap-3 px-3.5 py-2 text-left hover:bg-slate-50"
               >
                 <span>
                   {c.name} <span className="text-slate-400">{c.phone}</span>
@@ -111,7 +111,7 @@ export function CustomerPicker({ customerId, onChange, disabled }: Props) {
                 onClick={() =>
                   create.mutate(looksLikePhone ? { name: query.trim(), phone: query.trim() } : { name: query.trim() })
                 }
-                className="w-full border-t border-slate-100 px-3 py-2 text-left font-medium text-emerald-700 hover:bg-emerald-50"
+                className="w-full border-t border-slate-100 px-3.5 py-2 text-left font-medium text-emerald-700 hover:bg-emerald-50"
               >
                 {t("customer.addNew", { name: query.trim() })}
               </button>

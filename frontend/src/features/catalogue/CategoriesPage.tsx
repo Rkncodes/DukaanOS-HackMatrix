@@ -4,9 +4,9 @@ import { useTranslation } from "../../i18n";
 import { useAllProducts, useCategories, useDeleteCategory, useSaveCategory, type Category } from "./api";
 import { CatalogueSummary } from "./CatalogueSummary";
 
-const input = "rounded-md border border-slate-300 px-3 py-2 text-sm focus:border-emerald-500 focus:outline-none";
-const primary = "rounded-md bg-emerald-600 px-4 py-2 text-sm font-medium text-white hover:bg-emerald-700 disabled:opacity-50";
-const secondary = "rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium hover:bg-slate-50 disabled:opacity-50";
+const input = "rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
+const primary = "rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50";
+const secondary = "rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
 
 /** Groups for the merchant's products. A product has one category or none. */
 export function CategoriesPage() {
