@@ -15,9 +15,12 @@ type Method = Schemas["PaymentMethod"];
 // Paytm is not offered here: it is only ever recorded after Paytm's own verification.
 const PAID_BY = ["cash", "upi", "card"] as const satisfies readonly Method[];
 
-const input = "w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
-const primary = "rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50";
-const secondary = "rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
+const input = "w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
+const primary = "rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50";
+const secondary = "rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
+/** The two record buttons on the dark header: the one whose form is open is filled. */
+const heroOn = "rounded-full bg-lime-300 px-4 py-2 text-sm font-semibold text-emerald-950 hover:bg-lime-200";
+const heroOff = "rounded-full border border-white/40 px-4 py-2 text-sm font-medium text-white hover:bg-white/10";
 
 /** One customer's khata: what they owe, the ledger behind that number, and recording udhaar or a payment. */
 export function KhataCustomerPage() {
@@ -59,58 +62,58 @@ export function KhataCustomerPage() {
   return (
     <>
       <div className="mb-4">{back}</div>
-      <header className="mb-5 flex items-center gap-3">
-        <span
-          aria-hidden="true"
-          className="flex h-11 w-11 items-center justify-center rounded-full bg-emerald-50 text-lg font-semibold text-emerald-700"
-        >
-          {customer.name.trim().charAt(0).toUpperCase()}
-        </span>
-        <div>
-          <h1 className="text-xl font-semibold tracking-tight text-slate-900">{customer.name}</h1>
-          <p className="text-sm text-slate-500">{customer.phone ?? t("customer.noPhone")}</p>
-        </div>
-      </header>
-
-      <CustomerInsights customerId={customer.id} />
-
-      <div className="mb-4 grid gap-4 lg:grid-cols-3">
-        <Card title={label === "advance" ? t("khata.advance") : t("nav.outstanding")}>
-          <div
-            aria-label={t("khata.col.balance")}
-            className={`text-3xl font-semibold tabular-nums ${label === "outstanding" ? "text-red-600" : "text-slate-900"}`}
-          >
-            {formatINR(amount)}
-          </div>
-          <div className="mt-1 text-sm text-slate-500">
-            {label === "outstanding" && t("khata.owedToYou")}
-            {label === "advance" && t("khata.paidAhead")}
-            {label === "settled" && t("khata.nothingOwed")}
-          </div>
-        </Card>
-
-        <div className="lg:col-span-2">
-          <Card>
-            <div className="flex flex-wrap gap-2">
-              <button type="button" className={recording === "credit" ? primary : secondary} onClick={() => setRecording("credit")}>
-                {t("khata.recordCredit")}
-              </button>
-              <button type="button" className={recording === "payment" ? primary : secondary} onClick={() => setRecording("payment")}>
-                {t("khata.recordPayment")}
-              </button>
+      {/* Who it is, what stands between you, and the two things you can record: one header for the page. */}
+      <section className="mb-4 rounded-3xl bg-emerald-600 p-5 text-white sm:p-6">
+        <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-4">
+          <header className="flex min-w-0 items-center gap-3">
+            <span
+              aria-hidden="true"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-lime-300 text-lg font-semibold text-emerald-950"
+            >
+              {customer.name.trim().charAt(0).toUpperCase()}
+            </span>
+            <div className="min-w-0">
+              <h1 className="truncate text-xl font-semibold tracking-tight">{customer.name}</h1>
+              <p className="text-sm text-emerald-100">{customer.phone ?? t("customer.noPhone")}</p>
             </div>
-            {recording && (
-              <EntryForm
-                key={recording}
-                customerId={customer.id}
-                type={recording}
-                balance={Number(balance)}
-                onDone={() => setRecording(null)}
-              />
-            )}
+          </header>
+          <div className="sm:text-right">
+            <h2 className="text-xs font-medium text-emerald-100">{label === "advance" ? t("khata.advance") : t("nav.outstanding")}</h2>
+            <div aria-label={t("khata.col.balance")} className="text-4xl font-semibold tracking-tight tabular-nums text-lime-300">
+              {formatINR(amount)}
+            </div>
+            <div className="text-xs text-emerald-100">
+              {label === "outstanding" && t("khata.owedToYou")}
+              {label === "advance" && t("khata.paidAhead")}
+              {label === "settled" && t("khata.nothingOwed")}
+            </div>
+          </div>
+        </div>
+        <div className="mt-5 flex flex-wrap gap-2">
+          <button type="button" className={recording === "credit" ? heroOn : heroOff} onClick={() => setRecording("credit")}>
+            {t("khata.recordCredit")}
+          </button>
+          <button type="button" className={recording === "payment" ? heroOn : heroOff} onClick={() => setRecording("payment")}>
+            {t("khata.recordPayment")}
+          </button>
+        </div>
+      </section>
+
+      {recording && (
+        <div className="mb-4">
+          <Card>
+            <EntryForm
+              key={recording}
+              customerId={customer.id}
+              type={recording}
+              balance={Number(balance)}
+              onDone={() => setRecording(null)}
+            />
           </Card>
         </div>
-      </div>
+      )}
+
+      <CustomerInsights customerId={customer.id} />
 
       <Card title={t("nav.ledger")}>
         {entries.length === 0 ? (
@@ -187,7 +190,7 @@ function EntryForm({
   }
 
   return (
-    <form onSubmit={onSubmit} aria-label={type === "credit" ? t("khata.recordCredit") : t("khata.recordPayment")} className="mt-4 space-y-3">
+    <form onSubmit={onSubmit} aria-label={type === "credit" ? t("khata.recordCredit") : t("khata.recordPayment")} className="space-y-3">
       <div className="grid gap-3 sm:grid-cols-2">
         <label className="text-sm text-slate-600">
           {type === "credit" ? t("khata.amountCredit") : t("khata.amountReceived")} (₹)

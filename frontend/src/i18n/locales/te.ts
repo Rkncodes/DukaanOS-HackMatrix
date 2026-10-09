@@ -7,7 +7,6 @@ export const te: Messages = {
   "common.save": "సేవ్ చేయి",
   "common.saving": "సేవ్ అవుతోంది…",
   "common.saved": "సేవ్ అయింది.",
-  "common.soon": "త్వరలో",
   "common.comingSoon": "త్వరలో వస్తోంది",
   "common.availableToday": "ఇప్పుడు అందుబాటులో ఉంది",
 
@@ -15,14 +14,9 @@ export const te: Messages = {
   "app.apiUnreachable": "DukaanOS API ని చేరుకోలేకపోతున్నాం. బ్యాకెండ్ నడుస్తోందా?",
 
   "nav.dashboard": "డ్యాష్‌బోర్డ్",
-  "nav.overview": "అవలోకనం",
   "nav.opportunities": "అవకాశాలు",
   "nav.analytics": "విశ్లేషణ",
   "nav.counter": "కౌంటర్",
-  "nav.visionCounter": "విజన్ కౌంటర్",
-  "nav.byCode": "కోడ్ ద్వారా",
-  "nav.parchi": "చీటీ",
-  "nav.voiceBilling": "వాయిస్ బిల్లింగ్",
   "nav.manualBilling": "మాన్యువల్ బిల్లింగ్",
   "nav.returns": "రిటర్న్‌లు",
   "nav.catalogue": "కేటలాగ్",
@@ -39,6 +33,7 @@ export const te: Messages = {
   "nav.ledger": "లెడ్జర్",
   "nav.outstanding": "బకాయిలు",
   "nav.payments": "చెల్లింపులు",
+  "nav.insights": "ఇన్‌సైట్స్",
 
   "shell.menu": "మెనూ",
   "shell.home": "DukaanOS, డ్యాష్‌బోర్డ్‌కు వెళ్ళండి",

@@ -261,7 +261,8 @@ describe.each(LANGUAGES)("Login and registration in %s", (language) => {
 
     login = () => json(SESSION);
     await user.click(screen.getByRole("button", { name: say("auth.logIn") }));
-    expect(await screen.findByRole("button", { name: say("shell.logout") })).toBeTruthy();
+    await user.click(await screen.findByRole("button", { name: /Ramesh General Store/ }));
+    expect(screen.getByRole("menuitem", { name: say("shell.logout") })).toBeTruthy();
   });
 });
 

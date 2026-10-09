@@ -7,7 +7,6 @@ export const ta: Messages = {
   "common.save": "சேமி",
   "common.saving": "சேமிக்கிறது…",
   "common.saved": "சேமிக்கப்பட்டது.",
-  "common.soon": "விரைவில்",
   "common.comingSoon": "விரைவில் வருகிறது",
   "common.availableToday": "இப்போது கிடைக்கிறது",
 
@@ -15,14 +14,9 @@ export const ta: Messages = {
   "app.apiUnreachable": "DukaanOS API-ஐ அணுக முடியவில்லை. பேக்எண்ட் இயங்குகிறதா?",
 
   "nav.dashboard": "டாஷ்போர்டு",
-  "nav.overview": "மேலோட்டம்",
   "nav.opportunities": "வாய்ப்புகள்",
   "nav.analytics": "பகுப்பாய்வு",
   "nav.counter": "கவுண்டர்",
-  "nav.visionCounter": "விஷன் கவுண்டர்",
-  "nav.byCode": "குறியீடு மூலம்",
-  "nav.parchi": "சீட்டு",
-  "nav.voiceBilling": "குரல் பில்லிங்",
   "nav.manualBilling": "கைமுறை பில்லிங்",
   "nav.returns": "திருப்பங்கள்",
   "nav.catalogue": "பட்டியல்",
@@ -39,6 +33,7 @@ export const ta: Messages = {
   "nav.ledger": "பேரேடு",
   "nav.outstanding": "நிலுவை",
   "nav.payments": "கட்டணங்கள்",
+  "nav.insights": "நுண்ணறிவுகள்",
 
   "shell.menu": "மெனு",
   "shell.home": "DukaanOS, டாஷ்போர்டுக்குச் செல்",

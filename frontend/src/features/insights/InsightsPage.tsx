@@ -67,8 +67,8 @@ export function InsightsPage() {
             {shown.map((i) => {
               const text = insightText(i, t, language);
               return (
-                <li key={i.key} className="flex flex-wrap items-start gap-3 py-3">
-                  <span className={`rounded-lg p-2 ${i.tone === "red" ? "bg-red-50 text-red-700" : "bg-amber-50 text-amber-800"}`}>
+                <li key={i.key} className="flex flex-wrap items-center gap-x-3 gap-y-2 py-3.5">
+                  <span className={`rounded-full p-2.5 ${i.tone === "red" ? "bg-red-50 text-red-700" : "bg-amber-50 text-amber-800"}`}>
                     <Icon name={KIND_ICON[i.kind]} className="h-4 w-4" />
                   </span>
                   <div className="min-w-0 flex-1">
@@ -76,11 +76,12 @@ export function InsightsPage() {
                       {text.title}
                     </Link>
                     <p className="mt-0.5 text-xs text-slate-500">{text.detail}</p>
-                    <div className="mt-1.5">
-                      <Badge tone={i.tone as Tone}>{t(`insights.kind.${i.kind}` as const)}</Badge>
-                    </div>
                   </div>
-                  <div className="flex shrink-0 flex-wrap gap-1.5">
+                  {/* What kind of opportunity it is sits beside what can be done about it. */}
+                  <div className="flex max-w-full flex-wrap items-center gap-1 lg:shrink-0">
+                    <span className="mr-2">
+                      <Badge tone={i.tone as Tone}>{t(`insights.kind.${i.kind}` as const)}</Badge>
+                    </span>
                     <ActionButton onClick={() => snooze3Days(i.key)}>{t("insights.snooze")}</ActionButton>
                     <ActionButton onClick={() => act.mutate({ key: i.key, status: "dismissed" })}>{t("common.dismiss")}</ActionButton>
                     <ActionButton primary onClick={() => act.mutate({ key: i.key, status: "resolved" })}>
@@ -102,7 +103,7 @@ function FilterButton({ active, onClick, children }: { active: boolean; onClick:
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-full px-3 py-1.5 text-xs font-medium ${active ? "bg-emerald-600 text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200"}`}
+      className={`rounded-full px-3.5 py-2 text-xs font-medium ${active ? "bg-emerald-600 text-white" : "bg-white text-slate-600 hover:text-slate-900"}`}
     >
       {children}
     </button>
@@ -116,8 +117,8 @@ function ActionButton({ onClick, primary, children }: { onClick: () => void; pri
       onClick={onClick}
       className={
         primary
-          ? "whitespace-nowrap rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white hover:bg-emerald-700"
-          : "whitespace-nowrap rounded-lg border border-slate-300 bg-white px-2.5 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50"
+          ? "ml-1 whitespace-nowrap rounded-full bg-lime-300 px-3.5 py-1.5 text-xs font-semibold text-emerald-950 hover:bg-lime-400"
+          : "whitespace-nowrap rounded-full px-2.5 py-1.5 text-xs font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-900"
       }
     >
       {children}

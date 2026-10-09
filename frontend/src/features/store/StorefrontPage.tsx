@@ -37,7 +37,7 @@ export function StorefrontPage() {
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t("store.searchPlaceholder")}
         aria-label={t("products.search")}
-        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2 focus:border-emerald-600 focus:outline-none"
+        className="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 focus:border-emerald-600 focus:outline-none"
       />
       {store.categories.length > 0 && (
         <div role="group" aria-label={t("nav.categories")} className="mt-3 flex gap-2 overflow-x-auto pb-1">
@@ -49,7 +49,7 @@ export function StorefrontPage() {
               onClick={() => setCategoryId(category.id)}
               className={`shrink-0 rounded-full border px-3 py-1 text-sm ${
                 categoryId === category.id
-                  ? "border-emerald-600 bg-emerald-600 text-white"
+                  ? "border-lime-400 bg-lime-300 text-emerald-950"
                   : "border-slate-300 bg-white text-slate-700"
               }`}
             >
@@ -81,7 +81,7 @@ export function StorefrontPage() {
         <div className="fixed inset-x-0 bottom-0 border-t border-slate-200 bg-white p-3">
           <Link
             to={`/store/${slug}/cart`}
-            className="mx-auto block max-w-xl rounded-xl bg-emerald-600 py-3 text-center font-semibold text-white hover:bg-emerald-700"
+            className="mx-auto block max-w-xl rounded-full bg-emerald-600 py-3 text-center font-semibold text-white hover:bg-emerald-700"
           >
             {t(cart.count === 1 ? "store.viewCart.one" : "store.viewCart.other", { count: cart.count, amount: formatINR(cart.total) })}
           </Link>

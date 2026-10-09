@@ -76,7 +76,7 @@ export function CartPage() {
         {soldOut.length === 0 ? (
           <Link
             to={`/store/${slug}/checkout`}
-            className="block rounded-xl bg-emerald-600 py-3 text-center font-semibold text-white hover:bg-emerald-700"
+            className="block rounded-full bg-emerald-600 py-3 text-center font-semibold text-white hover:bg-emerald-700"
           >
             {t("store.toCheckout")}
           </Link>

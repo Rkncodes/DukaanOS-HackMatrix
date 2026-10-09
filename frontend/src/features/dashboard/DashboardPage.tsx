@@ -78,8 +78,11 @@ export function DashboardPage() {
     <>
       <PageHeader title={t("nav.dashboard")} subtitle={t("dash.subtitle")} />
 
-      <div className="mb-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      {/* Today at a glance: the sales figure leads, with the assistant beside it. */}
+      <div className="mb-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="min-w-0 lg:col-span-2">
         <Stat
+          emphasis
           label={t("dash.salesToday")}
           icon="wallet"
           tone="emerald"
@@ -90,6 +93,11 @@ export function DashboardPage() {
             `${t(sold.length === 1 ? "dash.completedSales.one" : "dash.completedSales.other", { count: sold.length })}${more} · ${trendHint(summary.data.sales_trend_pct, t)}`
           }
         />
+        </div>
+        <SalaahkaarCard />
+      </div>
+
+      <div className="mb-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
         <Stat
           label={t("dash.bills")}
           icon="cart"
@@ -146,7 +154,7 @@ export function DashboardPage() {
           </Card>
         </div>
 
-        <div className="min-w-0 space-y-4">
+        <div className="min-w-0">
           <Card
             title={t("dash.attention")}
             action={
@@ -179,7 +187,6 @@ export function DashboardPage() {
               ]}
             />
           </Card>
-          <SalaahkaarCard />
         </div>
       </div>
     </>
@@ -195,8 +202,8 @@ function ActivityList({ orders, when }: { orders: Order[]; when: (iso: string) =
         const shop = o.channel === "shop";
         const { key, tone } = standing(o);
         return (
-          <li key={o.id} className="flex items-center gap-3 py-2.5 text-sm">
-            <span className={`rounded-lg p-2 ${shop ? "bg-sky-50 text-sky-700" : "bg-emerald-50 text-emerald-700"}`}>
+          <li key={o.id} className="flex items-center gap-3 py-3 text-sm">
+            <span className={`rounded-full p-2.5 ${shop ? "bg-sky-50 text-sky-700" : "bg-lime-100 text-emerald-800"}`}>
               <Icon name={shop ? "store" : "cart"} className="h-4 w-4" />
             </span>
             <div className="min-w-0 flex-1">
@@ -240,7 +247,7 @@ function NeedsAttention({ items, loading }: { items: (Attention | false)[]; load
       {shown.map((item) => (
         <li key={item.key} className="flex items-center gap-1 rounded-lg px-2 py-2 hover:bg-slate-50">
           <Link to={item.to} className="flex min-w-0 flex-1 items-center gap-3">
-            <span className={`rounded-lg p-2 ${item.tone === "red" ? "bg-red-50 text-red-700" : "bg-amber-50 text-amber-800"}`}>
+            <span className={`rounded-full p-2.5 ${item.tone === "red" ? "bg-red-50 text-red-700" : "bg-amber-50 text-amber-800"}`}>
               <Icon name={item.icon} className="h-4 w-4" />
             </span>
             <span className="min-w-0 flex-1">
@@ -269,22 +276,22 @@ function SalaahkaarCard() {
   const shell = useShell();
   const status = useAssistantStatus();
   return (
-    <section aria-label={t("dash.salaahkaar")} className="rounded-2xl bg-emerald-700 p-5 text-white">
-      <div className="flex items-center gap-2 text-xs font-medium text-emerald-100">
-        <Icon name="sparkle" className="h-4 w-4" />
+    <section aria-label={t("dash.salaahkaar")} className="flex h-full flex-col items-start rounded-3xl bg-lime-300 p-6 text-emerald-950">
+      <div className="flex items-center gap-1.5 rounded-full bg-emerald-600 px-3 py-1 text-xs font-medium text-lime-300">
+        <Icon name="sparkle" className="h-3.5 w-3.5" />
         {t("dash.salaahkaar")}
       </div>
-      <h2 className="mt-3 text-lg font-semibold tracking-tight">{t("dash.askAnything")}</h2>
-      <p className="mt-1 text-sm text-emerald-100">{t("dash.askTopics")}</p>
+      <h2 className="mt-4 text-2xl font-semibold tracking-tight">{t("dash.askAnything")}</h2>
+      <p className="mt-1 text-sm text-emerald-900">{t("dash.askTopics")}</p>
       {status.data && !status.data.available && (
-        <p role="note" className="mt-3 rounded-lg bg-emerald-800/60 px-3 py-2 text-xs text-emerald-50">
+        <p role="note" className="mt-3 rounded-xl bg-lime-200 px-3 py-2 text-xs text-emerald-900">
           {t("dash.notAnswering")} {status.data.reason}
         </p>
       )}
       <button
         type="button"
         onClick={() => shell?.openAssistant()}
-        className="mt-4 rounded-full bg-white px-4 py-2 text-sm font-semibold text-emerald-800 hover:bg-emerald-50"
+        className="mt-auto rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700"
       >
         {t("shell.askSalaahkaar")}
       </button>

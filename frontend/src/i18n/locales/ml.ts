@@ -7,7 +7,6 @@ export const ml: Messages = {
   "common.save": "സേവ് ചെയ്യുക",
   "common.saving": "സേവ് ചെയ്യുന്നു…",
   "common.saved": "സേവ് ചെയ്തു.",
-  "common.soon": "ഉടൻ",
   "common.comingSoon": "ഉടൻ വരുന്നു",
   "common.availableToday": "ഇപ്പോൾ ലഭ്യം",
 
@@ -15,14 +14,9 @@ export const ml: Messages = {
   "app.apiUnreachable": "DukaanOS API-യിൽ എത്താനാകുന്നില്ല. ബാക്കെൻഡ് പ്രവർത്തിക്കുന്നുണ്ടോ?",
 
   "nav.dashboard": "ഡാഷ്‌ബോർഡ്",
-  "nav.overview": "അവലോകനം",
   "nav.opportunities": "അവസരങ്ങൾ",
   "nav.analytics": "വിശകലനം",
   "nav.counter": "കൗണ്ടർ",
-  "nav.visionCounter": "വിഷൻ കൗണ്ടർ",
-  "nav.byCode": "കോഡ് വഴി",
-  "nav.parchi": "കുറിപ്പ്",
-  "nav.voiceBilling": "ശബ്ദ ബില്ലിംഗ്",
   "nav.manualBilling": "മാനുവൽ ബില്ലിംഗ്",
   "nav.returns": "തിരികെ നൽകൽ",
   "nav.catalogue": "കാറ്റലോഗ്",
@@ -39,6 +33,7 @@ export const ml: Messages = {
   "nav.ledger": "ലെഡ്ജർ",
   "nav.outstanding": "കുടിശ്ശിക",
   "nav.payments": "പേയ്‌മെന്റുകൾ",
+  "nav.insights": "ഇൻസൈറ്റുകൾ",
 
   "shell.menu": "മെനു",
   "shell.home": "DukaanOS, ഡാഷ്‌ബോർഡിലേക്ക് പോകുക",

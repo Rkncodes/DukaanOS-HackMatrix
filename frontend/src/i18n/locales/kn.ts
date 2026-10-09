@@ -7,7 +7,6 @@ export const kn: Messages = {
   "common.save": "ಉಳಿಸಿ",
   "common.saving": "ಉಳಿಸಲಾಗುತ್ತಿದೆ…",
   "common.saved": "ಉಳಿಸಲಾಗಿದೆ.",
-  "common.soon": "ಶೀಘ್ರದಲ್ಲಿ",
   "common.comingSoon": "ಶೀಘ್ರದಲ್ಲಿ ಬರಲಿದೆ",
   "common.availableToday": "ಈಗ ಲಭ್ಯ",
 
@@ -15,14 +14,9 @@ export const kn: Messages = {
   "app.apiUnreachable": "DukaanOS API ತಲುಪಲು ಆಗುತ್ತಿಲ್ಲ. ಬ್ಯಾಕೆಂಡ್ ಚಾಲನೆಯಲ್ಲಿದೆಯೇ?",
 
   "nav.dashboard": "ಡ್ಯಾಶ್‌ಬೋರ್ಡ್",
-  "nav.overview": "ಮುನ್ನೋಟ",
   "nav.opportunities": "ಅವಕಾಶಗಳು",
   "nav.analytics": "ವಿಶ್ಲೇಷಣೆ",
   "nav.counter": "ಕೌಂಟರ್",
-  "nav.visionCounter": "ವಿಷನ್ ಕೌಂಟರ್",
-  "nav.byCode": "ಕೋಡ್ ಮೂಲಕ",
-  "nav.parchi": "ಚೀಟಿ",
-  "nav.voiceBilling": "ಧ್ವನಿ ಬಿಲ್ಲಿಂಗ್",
   "nav.manualBilling": "ಮ್ಯಾನುಯಲ್ ಬಿಲ್ಲಿಂಗ್",
   "nav.returns": "ಹಿಂತಿರುಗಿಸುವಿಕೆ",
   "nav.catalogue": "ಕ್ಯಾಟಲಾಗ್",
@@ -39,6 +33,7 @@ export const kn: Messages = {
   "nav.ledger": "ಲೆಡ್ಜರ್",
   "nav.outstanding": "ಬಾಕಿ",
   "nav.payments": "ಪಾವತಿಗಳು",
+  "nav.insights": "ಒಳನೋಟಗಳು",
 
   "shell.menu": "ಮೆನು",
   "shell.home": "DukaanOS, ಡ್ಯಾಶ್‌ಬೋರ್ಡ್‌ಗೆ ಹೋಗಿ",

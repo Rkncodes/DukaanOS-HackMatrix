@@ -75,13 +75,13 @@ export function ProductPicker({ products, cartItems, onAdd, busy }: Props) {
           }
         }}
         placeholder={t("picker.placeholder")}
-        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-base text-slate-900 focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+        className="w-full rounded-xl border border-transparent bg-slate-100 px-4 py-3 text-base text-slate-900 focus:border-emerald-600 focus:bg-white focus:outline-none focus:ring-4 focus:ring-emerald-100"
       />
       <p className="mt-1.5 min-h-5 text-sm text-red-600" role="status">
         {message}
       </p>
 
-      <ul aria-label={t("picker.products")} className="-mx-1 mt-1 grid min-h-0 flex-1 auto-rows-max grid-cols-1 gap-2 overflow-y-auto px-1 pb-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+      <ul aria-label={t("picker.products")} className="-mx-1 mt-1 grid min-h-0 flex-1 auto-rows-max grid-cols-1 gap-2 overflow-y-auto px-1 pb-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {matches.map((p) => {
           const left = available.get(p.id) ?? 0;
           return (
@@ -90,17 +90,23 @@ export function ProductPicker({ products, cartItems, onAdd, busy }: Props) {
                 type="button"
                 disabled={busy || soldOut(p.id)}
                 onClick={() => void add({ product_id: p.id, source: "manual" })}
-                className="flex w-full flex-col justify-between gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-3 text-left hover:border-emerald-400 hover:bg-emerald-50 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:opacity-60"
+                className="group flex w-full flex-col gap-1 rounded-2xl bg-slate-50 px-4 py-3.5 text-left hover:bg-lime-100 disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:bg-slate-50"
               >
-                <span className="text-sm font-medium leading-snug text-slate-900">{p.name}</span>
-                <span className="flex items-baseline justify-between gap-2 text-sm">
+                <span className="order-1 text-sm font-medium leading-snug text-slate-900">{p.name}</span>
+                {/* The whole tile adds the product; the plus only says so. */}
+                <span className="order-3 mt-auto flex items-center justify-between gap-2 pt-2 text-sm">
                   <span className="font-semibold tabular-nums text-slate-900">
                     {formatINR(p.price)}
                     <span className="font-normal text-slate-400"> / {p.unit}</span>
                   </span>
-                  <span className={`whitespace-nowrap text-xs ${left <= 0 ? "font-medium text-red-600" : "text-slate-500"}`}>
-                    {t("picker.left", { quantity: formatQuantity(String(left)) })}
+                  <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-white text-emerald-700 group-hover:bg-emerald-600 group-hover:text-white group-disabled:bg-white group-disabled:text-slate-300">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" aria-hidden="true" className="h-3.5 w-3.5">
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
                   </span>
+                </span>
+                <span className={`order-2 whitespace-nowrap text-xs ${left <= 0 ? "font-medium text-red-600" : "text-slate-500"}`}>
+                  {t("picker.left", { quantity: formatQuantity(String(left)) })}
                 </span>
               </button>
             </li>

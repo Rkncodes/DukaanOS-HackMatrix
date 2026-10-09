@@ -7,7 +7,6 @@ export const gu: Messages = {
   "common.save": "સેવ કરો",
   "common.saving": "સેવ થઈ રહ્યું છે…",
   "common.saved": "સેવ થયું.",
-  "common.soon": "ટૂંક સમયમાં",
   "common.comingSoon": "ટૂંક સમયમાં આવે છે",
   "common.availableToday": "અત્યારે ઉપલબ્ધ",
 
@@ -15,14 +14,9 @@ export const gu: Messages = {
   "app.apiUnreachable": "DukaanOS API સાથે સંપર્ક થતો નથી. બેકએન્ડ ચાલુ છે?",
 
   "nav.dashboard": "ડેશબોર્ડ",
-  "nav.overview": "ઝાંખી",
   "nav.opportunities": "તકો",
   "nav.analytics": "વિશ્લેષણ",
   "nav.counter": "કાઉન્ટર",
-  "nav.visionCounter": "વિઝન કાઉન્ટર",
-  "nav.byCode": "કોડથી",
-  "nav.parchi": "ચિઠ્ઠી",
-  "nav.voiceBilling": "બોલીને બિલિંગ",
   "nav.manualBilling": "મેન્યુઅલ બિલિંગ",
   "nav.returns": "પરત",
   "nav.catalogue": "કેટલોગ",
@@ -39,6 +33,7 @@ export const gu: Messages = {
   "nav.ledger": "ખાતાવહી",
   "nav.outstanding": "બાકી",
   "nav.payments": "ચુકવણી",
+  "nav.insights": "ઇનસાઇટ્સ",
 
   "shell.menu": "મેનૂ",
   "shell.home": "DukaanOS, ડેશબોર્ડ પર જાઓ",

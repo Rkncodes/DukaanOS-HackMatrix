@@ -1,20 +1,21 @@
 @import "tailwindcss";
 
 /*
- * DukaanOS design tokens. The app is styled with Tailwind utilities and uses two colour families throughout:
- * `slate` for every neutral (page, surfaces, borders, text) and `emerald` for the brand and every primary
- * action. Their values are set here, so the whole product shares one palette: a calm, slightly warm neutral
- * and a deep shop-green. `red` (a problem) and `amber` (needs a look) keep Tailwind's own values.
+ * DukaanOS design tokens. The app is styled with Tailwind utilities and uses three colour families throughout:
+ * `slate` for every neutral (page, surfaces, hairlines, text), `emerald` for the brand and every primary
+ * action, and `lime` for the highlight. Their values are set here, so the whole product shares one palette:
+ * a soft warm neutral, a deep shop-green and one fresh accent. `red` (a problem) and `amber` (needs a look)
+ * keep Tailwind's own values.
  */
 @theme {
   --font-sans: "Inter", "Segoe UI Variable Text", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", "Noto Sans",
     sans-serif;
 
-  /* Neutrals: 100 is the page, white the surfaces, 200 the hairlines, 500+ the text. */
-  --color-slate-50: #f7f8f5;
-  --color-slate-100: #f0f2ed;
-  --color-slate-200: #e3e6df;
-  --color-slate-300: #cfd4ca;
+  /* Neutrals: 100 is the page, white the surfaces, 50 the tiles on a surface, 200 the hairlines, 500+ the text. */
+  --color-slate-50: #f6f7f3;
+  --color-slate-100: #eff0ec;
+  --color-slate-200: #e3e5df;
+  --color-slate-300: #cfd3ca;
   --color-slate-400: #8d9488;
   --color-slate-500: #677064;
   --color-slate-600: #4b5348;
@@ -23,27 +24,36 @@
   --color-slate-900: #141914;
   --color-slate-950: #0b0e0b;
 
-  /* Brand green: 600 is the primary action, 700 its hover, 50/100 the quiet tints behind selected things. */
+  /* Brand green: 600 is the primary action and the chosen tab, 700 its hover, 50/100 quiet tints. */
   --color-emerald-50: #eef6ef;
   --color-emerald-100: #dcedde;
   --color-emerald-200: #bcdcc1;
   --color-emerald-300: #8fc49a;
   --color-emerald-400: #58a56d;
   --color-emerald-500: #2f8755;
-  --color-emerald-600: #176b47;
-  --color-emerald-700: #12573a;
-  --color-emerald-800: #0f4630;
-  --color-emerald-900: #0c3826;
-  --color-emerald-950: #062116;
+  --color-emerald-600: #134a35;
+  --color-emerald-700: #0f3d2c;
+  --color-emerald-800: #0c3324;
+  --color-emerald-900: #0a2a1e;
+  --color-emerald-950: #051a12;
+
+  /* Lime: the one highlight. The section you are in, and what deserves a second look. Always carries dark
+     green text; never the colour of a primary action. */
+  --color-lime-50: #f6fbe9;
+  --color-lime-100: #ecf7d3;
+  --color-lime-200: #dcf1ad;
+  --color-lime-300: #c3e87c;
+  --color-lime-400: #a8d758;
 
   /* Between xl and 2xl: wide enough for the Counter to show its six billing modes in one row. */
   --breakpoint-wide: 87.5rem;
 
-  /* One family of corners: controls (md), tiles and notices (lg), surfaces (xl, 2xl). */
+  /* One family of corners: controls (md, lg), tiles (xl, 2xl), surfaces (3xl). */
   --radius-md: 0.5rem;
   --radius-lg: 0.625rem;
   --radius-xl: 0.875rem;
   --radius-2xl: 1.125rem;
+  --radius-3xl: 1.5rem;
 
   --shadow-sm: 0 1px 2px rgb(20 25 20 / 0.05);
   --shadow-lg: 0 12px 28px -8px rgb(20 25 20 / 0.16), 0 2px 6px rgb(20 25 20 / 0.05);

@@ -24,7 +24,7 @@ export function PageHeader({ title, subtitle, actions }: { title: string; subtit
 export function Card({ title, action, children }: { title?: string; action?: ReactNode; children: ReactNode }) {
   const heading = "text-sm font-semibold text-slate-900";
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-5">
+    <section className="rounded-3xl bg-white p-5">
       {action ? (
         <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
           {title && <h2 className={heading}>{title}</h2>}
@@ -59,6 +59,7 @@ export function Stat({
   hint,
   icon,
   tone = "slate",
+  emphasis = false,
 }: {
   label: string;
   value: ReactNode;
@@ -66,15 +67,17 @@ export function Stat({
   icon?: IconName;
   /** Colours the icon, and the number too when it is a warning. */
   tone?: Tone;
+  /** The one figure a page leads with: it is set larger and fills the space it is given. */
+  emphasis?: boolean;
 }) {
   const strong = tone === "red" ? "text-red-600" : tone === "amber" ? "text-amber-700" : "text-slate-900";
   return (
-    <div className="relative rounded-2xl border border-slate-200 bg-white p-5">
+    <div className={`relative rounded-3xl bg-white ${emphasis ? "h-full p-6 sm:p-7" : "p-5"}`}>
       <div className="pr-10 text-sm text-slate-500">{label}</div>
-      <div className={`mt-2 text-2xl font-semibold tracking-tight tabular-nums ${strong}`}>{value}</div>
-      {hint && <div className="mt-1 text-xs leading-relaxed text-slate-500">{hint}</div>}
+      <div className={`font-semibold tracking-tight tabular-nums ${emphasis ? "mt-4 text-5xl" : "mt-2 text-2xl"} ${strong}`}>{value}</div>
+      {hint && <div className={`leading-relaxed text-slate-500 ${emphasis ? "mt-3 text-sm" : "mt-1 text-xs"}`}>{hint}</div>}
       {icon && (
-        <span className={`absolute right-4 top-4 rounded-full p-2 ${TONES[tone]}`}>
+        <span className={`absolute rounded-full ${emphasis ? "right-6 top-6 p-2.5" : "right-4 top-4 p-2"} ${TONES[tone]}`}>
           <Icon name={icon} className="h-4 w-4" />
         </span>
       )}
@@ -100,7 +103,7 @@ export function ComingSoon({
   return (
     <>
       <PageHeader title={title} />
-      <section className="max-w-xl rounded-2xl border border-slate-200 bg-white p-6">
+      <section className="max-w-xl rounded-3xl bg-white p-6">
         <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-xs font-medium text-amber-800">{t("common.comingSoon")}</span>
         <div className="mt-4 space-y-2 text-sm leading-relaxed text-slate-600">{children}</div>
         {available.length > 0 && (

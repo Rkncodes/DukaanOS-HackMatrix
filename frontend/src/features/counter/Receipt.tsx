@@ -42,7 +42,7 @@ export function Receipt({
         )}
       </div>
 
-      <article className="rounded-2xl border border-slate-200 bg-white p-6 text-sm">
+      <article className="rounded-3xl bg-white p-6 text-sm">
         <header className="mb-3 border-b border-dashed border-slate-300 pb-3 text-center">
           <div className="font-semibold text-slate-900">{storeName}</div>
           {storeGstin && <div className="text-xs text-slate-500">GSTIN: {storeGstin}</div>}
@@ -104,7 +104,7 @@ export function Receipt({
         ref={nextRef}
         type="button"
         onClick={onNext}
-        className="mt-4 w-full rounded-xl bg-emerald-600 py-3 font-semibold text-white hover:bg-emerald-700"
+        className="mt-4 w-full rounded-full bg-emerald-600 py-3 font-semibold text-white hover:bg-emerald-700"
       >
         {t("receipt.newBill")}
       </button>

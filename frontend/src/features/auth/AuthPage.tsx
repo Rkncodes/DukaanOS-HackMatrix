@@ -4,7 +4,7 @@ import { useTranslation } from "../../i18n";
 import { ApiError } from "../../lib/api/client";
 import { useLogin, useRegister } from "./session";
 
-const input = "w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100";
+const input = "w-full rounded-xl border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100";
 const DEMO = { email: "ramesh@dukaanos.dev", password: "demo1234" };
 
 export function AuthPage() {
@@ -38,7 +38,7 @@ export function AuthPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-100 p-4">
-      <div className="w-full max-w-sm rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
+      <div className="w-full max-w-sm rounded-3xl bg-white p-7 shadow-sm">
         <div className="flex items-center gap-2.5">
           <span className="rounded-xl bg-emerald-600 p-2 text-white">
             <Icon name="store" className="h-5 w-5" />
@@ -78,7 +78,7 @@ export function AuthPage() {
           <button
             type="submit"
             disabled={active.isPending}
-            className="mt-1 rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60"
+            className="mt-1 rounded-full bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-60"
           >
             {active.isPending ? t("auth.pleaseWait") : mode === "login" ? t("auth.logIn") : t("auth.createAccount")}
           </button>

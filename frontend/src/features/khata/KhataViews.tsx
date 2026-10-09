@@ -151,7 +151,7 @@ export function KhataPaymentsPage() {
             action={(row) => (
               <Link
                 to={`/khata/${row.customer_id}?record=payment`}
-                className="inline-block rounded-lg bg-emerald-600 px-3 py-1.5 font-semibold text-white hover:bg-emerald-700"
+                className="inline-block rounded-full bg-emerald-600 px-3 py-1.5 font-semibold text-white hover:bg-emerald-700"
                 aria-label={t("khata.recordPaymentFrom", { name: row.customer_name })}
               >
                 {t("khata.recordPayment")}

@@ -99,7 +99,7 @@ export function BarcodeScan({ products, cartItems, onAdd, onRefresh, onClose, sc
   }
 
   return (
-    <section aria-label={t("counter.mode.barcode.name")} className="flex flex-col rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+    <section aria-label={t("counter.mode.barcode.name")} className="flex flex-col border-t border-slate-100 pt-4">
       <div className="order-1 mb-3 flex items-center justify-between">
         <h2 className="text-base font-semibold text-slate-900">{t("counter.mode.barcode.name")}</h2>
         <button type="button" onClick={onClose} className="-mr-2 rounded-md px-2 py-1 text-sm text-slate-500 hover:bg-slate-100 hover:text-slate-900">
@@ -131,12 +131,12 @@ export function BarcodeScan({ products, cartItems, onAdd, onRefresh, onClose, sc
             value={code}
             onChange={(e) => setCode(e.target.value)}
             placeholder={t("barcode.placeholder")}
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-3 font-mono text-lg tracking-wider focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100"
+            className="w-full rounded-xl border border-slate-300 bg-white px-3 py-3 font-mono text-lg tracking-wider focus:border-emerald-600 focus:outline-none focus:ring-4 focus:ring-emerald-100"
           />
           <button
             type="submit"
             disabled={busy || !code.trim()}
-            className="whitespace-nowrap rounded-lg bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
+            className="whitespace-nowrap rounded-full bg-emerald-600 px-4 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
           >
             {busy ? t("review.adding") : t("barcode.addToBill")}
           </button>

@@ -35,7 +35,7 @@ export function ShopStorefrontPage() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-5">
-      <section aria-label={t("storefront.yours")} className="rounded-2xl border border-slate-200 bg-white p-5 lg:col-span-3">
+      <section aria-label={t("storefront.yours")} className="rounded-3xl bg-white p-5 lg:col-span-3">
         <div className="flex items-center gap-3">
           <span className="rounded-xl bg-emerald-50 p-3 text-emerald-700">
             <Icon name="store" className="h-6 w-6" />
@@ -51,14 +51,14 @@ export function ShopStorefrontPage() {
             href={url}
             target="_blank"
             rel="noreferrer"
-            className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
+            className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700"
           >
             {t("storefront.open")}
           </a>
-          <button type="button" onClick={copy} className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+          <button type="button" onClick={copy} className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
             {copied ? t("qr.copied") : t("qr.copy")}
           </button>
-          <Link to="/shop/qr" className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+          <Link to="/shop/qr" className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
             {t("storefront.getQr")}
           </Link>
         </div>

@@ -132,40 +132,46 @@ export function CounterPage({
 
   return (
     <>
-      <PageHeader title={t("counter.title")} subtitle={t("counter.subtitle")} />
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_23rem] xl:grid-cols-[minmax(0,1fr)_25rem] xl:gap-6">
-        {/* Manual billing fills the screen's height: the product list scrolls inside it and the bill stays beside it. */}
-        <div className={`min-w-0 ${visionMode === null ? "lg:flex lg:h-[calc(100vh-11.5rem)] lg:min-h-[34rem] lg:flex-col" : ""}`}>
-          {/* The ways to add items, always in reach, as one switcher. Vision leads: it is what the Counter is built around. */}
-          <div
-            role="group"
-            aria-label={t("counter.billingMode")}
-            className="mb-3 grid grid-cols-2 gap-1 rounded-2xl border border-slate-200 bg-white p-1.5 sm:grid-cols-3 wide:grid-cols-6"
-          >
+      <PageHeader
+        title={t("counter.title")}
+        subtitle={t("counter.subtitle")}
+        actions={
+          // The ways to add items, as one compact switcher beside the title. Vision leads: it is what the Counter is built around.
+          <div role="group" aria-label={t("counter.billingMode")} className="flex max-w-full flex-wrap gap-0.5 rounded-3xl bg-white p-1">
             {MODES.map((m) => {
               const on = m.mode === visionMode;
               // Offered once the products are loaded: every mode adds items from the catalogue.
-              if (!products.data) return <div key={m.name} className="h-[52px] rounded-xl bg-slate-50" />;
+              if (!products.data) return <div key={m.name} className="h-8 w-20 rounded-full bg-slate-100" />;
               return (
                 <button
                   key={m.name}
                   type="button"
                   aria-label={text(m.id, "name")}
                   aria-pressed={on}
+                  title={text(m.id, "hint")}
                   onClick={() => setVisionMode(m.mode)}
-                  className={`flex min-w-0 flex-col justify-center gap-0.5 rounded-xl px-3 py-2 text-left leading-tight ${
-                    on ? "bg-emerald-600 text-white" : "text-slate-700 hover:bg-slate-100"
+                  className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-1.5 text-sm ${
+                    on ? "bg-emerald-600 font-medium text-white" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                   }`}
                 >
-                  <span className="flex w-full min-w-0 items-center gap-2">
-                    <Icon name={m.icon} className={`h-4 w-4 ${on ? "text-white" : "text-slate-400"}`} />
-                    <span className="truncate text-sm font-semibold">{text(m.id, "label")}</span>
-                  </span>
-                  <span className={`w-full truncate text-xs ${on ? "text-emerald-100" : "text-slate-500"}`}>{text(m.id, "hint")}</span>
+                  <Icon name={m.icon} className={`h-4 w-4 ${on ? "text-lime-300" : "text-slate-400"}`} />
+                  {text(m.id, "label")}
                 </button>
               );
             })}
           </div>
+        }
+      />
+      <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_23rem] xl:grid-cols-[minmax(0,1fr)_25rem] xl:gap-6">
+        {/*
+          One surface for adding items: whichever input is open. Manual billing fills the screen's height, so
+          the product list scrolls inside it and the bill stays beside it.
+        */}
+        <div
+          className={`min-w-0 rounded-3xl bg-white p-4 sm:p-5 ${
+            visionMode === null ? "lg:flex lg:h-[calc(100vh-11.5rem)] lg:min-h-[30rem] lg:flex-col" : "lg:self-start"
+          }`}
+        >
           <p className="mb-4 flex items-start gap-2 px-1 text-sm text-slate-500">
             <Icon name={active.icon} className="mt-0.5 h-4 w-4 text-slate-400" />
             {text(active.id, "how")}
@@ -207,7 +213,7 @@ export function CounterPage({
             />
           )}
           {products.data && visionMode === null && (
-            <div className="flex min-h-0 flex-1 flex-col rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+            <div className="flex min-h-0 flex-1 flex-col">
               <ProductPicker
                 products={products.data}
                 cartItems={counter.cart?.items ?? []}
@@ -217,7 +223,7 @@ export function CounterPage({
             </div>
           )}
         </div>
-        <div className="lg:sticky lg:top-[5.5rem] lg:self-start">
+        <div className="lg:sticky lg:top-20 lg:self-start">
           <CartPanel counter={counter} products={products.data} onCompleted={setReceipt} />
         </div>
       </div>

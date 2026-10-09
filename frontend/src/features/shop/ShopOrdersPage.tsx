@@ -23,8 +23,8 @@ const STATUS_EDGE: Record<Status, string> = {
 // Paytm is not offered here: it is only ever recorded after Paytm's own verification.
 const PAID_BY = ["cash", "upi", "card"] as const satisfies readonly Method[];
 
-const primary = "rounded-lg bg-emerald-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50";
-const secondary = "rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
+const primary = "rounded-full bg-emerald-600 px-3 py-1.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50";
+const secondary = "rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
 
 /**
  * Orders customers placed on the storefront. This merchant's only: the backend scopes the list to the
@@ -54,11 +54,11 @@ export function ShopOrdersPage({ pollMs = ORDERS_POLL_MS }: { pollMs?: number } 
   const done = all.filter((o) => o.status === "completed" || o.status === "cancelled");
   const section = (title: string, list: Order[]) =>
     list.length > 0 && (
-      <section aria-label={title} className="mb-6">
-        <h2 className="mb-2 text-sm font-semibold text-slate-900">
+      <section aria-label={title} className="rounded-3xl bg-white p-3">
+        <h2 className="mb-3 px-2 pt-1 text-sm font-semibold text-slate-900">
           {title} ({list.length})
         </h2>
-        <ul className="grid gap-3 lg:grid-cols-2">
+        <ul className="grid gap-3">
           {list.map((order) => (
             <OrderCard
               key={order.id}
@@ -97,13 +97,16 @@ export function ShopOrdersPage({ pollMs = ORDERS_POLL_MS }: { pollMs?: number } 
 
       <QueryState isPending={orders.isPending} error={orders.error} />
       {orders.data && all.length === 0 && (
-        <p className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-center text-sm text-slate-500">
+        <p className="rounded-3xl bg-white p-8 text-center text-sm text-slate-500">
           {t("orders.empty")}
         </p>
       )}
-      {section(t("orders.sectionNew"), fresh)}
-      {section(t("orders.sectionActive"), active)}
-      {section(t("orders.sectionDone"), done)}
+      {/* One column per stage, side by side when there is room: an order moves left to right as it is handled. */}
+      <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-3">
+        {section(t("orders.sectionNew"), fresh)}
+        {section(t("orders.sectionActive"), active)}
+        {section(t("orders.sectionDone"), done)}
+      </div>
     </>
   );
 }
@@ -127,11 +130,11 @@ function OrderCard({
   return (
     <li
       aria-label={t("orders.order", { number })}
-      className={`rounded-xl border border-l-4 border-slate-200 bg-white p-4 text-sm ${STATUS_EDGE[order.status]}`}
+      className={`rounded-2xl border-l-4 bg-slate-50 p-4 text-sm ${STATUS_EDGE[order.status]}`}
     >
       <header className="flex items-start justify-between gap-2">
         <div>
-          <div className="text-lg font-semibold leading-tight text-slate-900">{number}</div>
+          <div className="text-base font-semibold leading-tight text-slate-900">{number}</div>
           <time dateTime={order.created_at} className="text-xs text-slate-500">
             {new Date(order.created_at).toLocaleString(dateLocale, { dateStyle: "medium", timeStyle: "short" })}
           </time>
@@ -152,7 +155,7 @@ function OrderCard({
         </div>
       </dl>
 
-      <ul className="mt-3 space-y-0.5 rounded-lg bg-slate-50 px-3 py-2">
+      <ul className="mt-3 space-y-0.5 rounded-lg bg-white px-3 py-2">
         {order.items.map((item) => (
           <li key={item.id} className="flex justify-between gap-3">
             <span>
@@ -198,7 +201,7 @@ function OrderCard({
                 value={paidBy}
                 onChange={(e) => setPaidBy(e.target.value as Method)}
                 aria-label={t("orders.paidByOrder", { number })}
-                className="rounded-lg border border-slate-300 bg-white px-2 py-1.5 focus:border-emerald-600 focus:outline-none"
+                className="rounded-xl border border-slate-300 bg-white px-2 py-1.5 focus:border-emerald-600 focus:outline-none"
               >
                 {PAID_BY.map((m) => (
                   <option key={m} value={m}>

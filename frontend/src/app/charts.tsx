@@ -11,7 +11,7 @@ import { useTranslation } from "../i18n";
 
 export type ChartPoint = { label: string; value: number };
 
-const MARK = "#059669"; // emerald-600, the app's existing brand/action color
+const MARK = "#15503a"; // emerald-600 in index.css: the brand/action colour
 const GRID = "#e2e8f0"; // slate-200
 const AXIS_TEXT = "#64748b"; // slate-500 — text never wears the data color
 

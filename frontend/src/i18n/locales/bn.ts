@@ -7,7 +7,6 @@ export const bn: Messages = {
   "common.save": "সেভ করুন",
   "common.saving": "সেভ হচ্ছে…",
   "common.saved": "সেভ হয়েছে।",
-  "common.soon": "শীঘ্রই",
   "common.comingSoon": "শীঘ্রই আসছে",
   "common.availableToday": "এখনই পাওয়া যাচ্ছে",
 
@@ -15,14 +14,9 @@ export const bn: Messages = {
   "app.apiUnreachable": "DukaanOS API-তে পৌঁছানো যাচ্ছে না। ব্যাকএন্ড চালু আছে কি?",
 
   "nav.dashboard": "ড্যাশবোর্ড",
-  "nav.overview": "এক নজরে",
   "nav.opportunities": "সুযোগ",
   "nav.analytics": "বিশ্লেষণ",
   "nav.counter": "কাউন্টার",
-  "nav.visionCounter": "ভিশন কাউন্টার",
-  "nav.byCode": "কোড দিয়ে",
-  "nav.parchi": "ফর্দ",
-  "nav.voiceBilling": "বলে বিলিং",
   "nav.manualBilling": "ম্যানুয়াল বিলিং",
   "nav.returns": "ফেরত",
   "nav.catalogue": "ক্যাটালগ",
@@ -39,6 +33,7 @@ export const bn: Messages = {
   "nav.ledger": "খতিয়ান",
   "nav.outstanding": "বকেয়া",
   "nav.payments": "পেমেন্ট",
+  "nav.insights": "ইনসাইটস",
 
   "shell.menu": "মেনু",
   "shell.home": "DukaanOS, ড্যাশবোর্ডে যান",

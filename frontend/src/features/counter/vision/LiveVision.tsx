@@ -163,7 +163,7 @@ export function LiveVision({ cart, onConfirm, onClose, scanIntervalMs = SCAN_INT
   const boxes = tracks.map((t) => ({ ...t.detection, id: t.key }));
 
   return (
-    <section aria-label={t("counter.mode.live.name")} className="rounded-2xl border border-slate-200 bg-white p-4 sm:p-5">
+    <section aria-label={t("counter.mode.live.name")} className="border-t border-slate-100 pt-4">
       <div className="mb-3 flex items-center justify-between gap-2">
         <h2 className="text-base font-semibold text-slate-900">
           {t("counter.mode.live.name")}{" "}
@@ -174,7 +174,7 @@ export function LiveVision({ cart, onConfirm, onClose, scanIntervalMs = SCAN_INT
         <button
           type="button"
           onClick={stop}
-          className="rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
+          className="rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50"
         >
           {t("camera.stop")}
         </button>
@@ -274,7 +274,7 @@ export function LiveVision({ cart, onConfirm, onClose, scanIntervalMs = SCAN_INT
             type="button"
             disabled={ready.length === 0 || committing}
             onClick={() => void commit(ready)}
-            className="mt-3 w-full rounded-lg bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
+            className="mt-3 w-full rounded-full bg-emerald-600 py-2.5 text-sm font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-100 disabled:text-slate-400"
           >
             {committing ? t("review.adding") : t("live.addAllReady", { count: ready.length })}
           </button>
@@ -343,7 +343,7 @@ function TrackRow({
         disabled={busy}
         onClick={onAdd}
         aria-label={t("live.addQuantity", { quantity: formatQuantity(String(remaining)), name: product.name })}
-        className="rounded-lg bg-emerald-600 px-3 py-1 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
+        className="rounded-full bg-emerald-600 px-3 py-1 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
       >
         {more ? t("live.addMore", { count: remaining }) : t("live.addTimes", { count: remaining })}
       </button>

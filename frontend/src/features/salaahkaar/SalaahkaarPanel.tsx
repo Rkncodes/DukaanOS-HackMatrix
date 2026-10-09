@@ -270,12 +270,12 @@ export function SalaahkaarPanel({ open, onClose }: { open: boolean; onClose: () 
               rows={2}
               maxLength={500}
               placeholder="Aaj kitni bikri hui?"
-              className="w-full resize-none rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
+              className="w-full resize-none rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none"
             />
             <button
               type="submit"
               disabled={!question.trim() || ask.isPending}
-              className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
+              className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700 disabled:opacity-50"
             >
               {ask.isPending ? t("salaahkaar.asking") : t("salaahkaar.ask")}
             </button>

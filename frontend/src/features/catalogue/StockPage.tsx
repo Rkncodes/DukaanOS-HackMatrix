@@ -6,8 +6,8 @@ import { formatQuantity } from "../../lib/format";
 import { STOCK_LEVEL, stockLevel, useAdjustStock, type Product } from "./api";
 import { CatalogueSummary } from "./CatalogueSummary";
 
-const input = "rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
-const secondary = "rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
+const input = "rounded-xl border border-slate-300 bg-white px-3 py-2 text-sm focus:border-emerald-600 focus:outline-none";
+const secondary = "rounded-full border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 disabled:opacity-50";
 
 /** What needs the merchant first comes first: out of stock, then low, then the rest. */
 const URGENCY = { out: 0, low: 1, ok: 2 };

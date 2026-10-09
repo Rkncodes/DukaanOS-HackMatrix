@@ -9,7 +9,6 @@ export const en = {
   "common.save": "Save",
   "common.saving": "Saving…",
   "common.saved": "Saved.",
-  "common.soon": "Soon",
   "common.comingSoon": "Coming soon",
   "common.availableToday": "Available today",
 
@@ -17,14 +16,9 @@ export const en = {
   "app.apiUnreachable": "Cannot reach the DukaanOS API. Is the backend running?",
 
   "nav.dashboard": "Dashboard",
-  "nav.overview": "Overview",
   "nav.opportunities": "Opportunities",
   "nav.analytics": "Analytics",
   "nav.counter": "Counter",
-  "nav.visionCounter": "Vision Counter",
-  "nav.byCode": "By Code",
-  "nav.parchi": "Parchi",
-  "nav.voiceBilling": "Voice Billing",
   "nav.manualBilling": "Manual Billing",
   "nav.returns": "Returns",
   "nav.catalogue": "Catalogue",
@@ -41,6 +35,7 @@ export const en = {
   "nav.ledger": "Ledger",
   "nav.outstanding": "Outstanding",
   "nav.payments": "Payments",
+  "nav.insights": "Insights",
 
   "shell.menu": "Menu",
   "shell.home": "DukaanOS, go to Dashboard",

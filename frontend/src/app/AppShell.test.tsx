@@ -84,7 +84,8 @@ const PROTECTED = [
 describe("log out", () => {
   it("ends the session and shows the login page", async () => {
     const { user, router } = load("/khata");
-    await user.click(await screen.findByRole("button", { name: "Log out" }));
+    await user.click(await screen.findByRole("button", { name: /Ramesh General Store/ }));
+    await user.click(screen.getByRole("menuitem", { name: "Log out" }));
 
     expect(await screen.findByRole("button", { name: "Log in" })).toBeTruthy();
     expect(router.state.location.pathname).toBe("/login");
@@ -94,7 +95,8 @@ describe("log out", () => {
 
   it("stays logged out after a refresh, on every merchant page", async () => {
     const first = load("/counter");
-    await first.user.click(await screen.findByRole("button", { name: "Log out" }));
+    await first.user.click(await screen.findByRole("button", { name: /Ramesh General Store/ }));
+    await first.user.click(screen.getByRole("menuitem", { name: "Log out" }));
     await screen.findByRole("button", { name: "Log in" });
 
     for (const path of PROTECTED) {
@@ -102,7 +104,7 @@ describe("log out", () => {
       const { router } = load(path);
       expect(await screen.findByRole("button", { name: "Log in" })).toBeTruthy();
       expect(router.state.location.pathname).toBe("/login");
-      expect(screen.queryByRole("button", { name: "Log out" })).toBeNull();
+      expect(screen.queryByRole("button", { name: /Ramesh General Store/ })).toBeNull();
     }
   });
 
@@ -121,11 +123,12 @@ describe("log out", () => {
   it("keeps the merchant logged in, and says so, when the backend could not end the session", async () => {
     logoutFails = true;
     const { user, router } = load("/khata");
-    await user.click(await screen.findByRole("button", { name: "Log out" }));
+    await user.click(await screen.findByRole("button", { name: /Ramesh General Store/ }));
+    await user.click(screen.getByRole("menuitem", { name: "Log out" }));
 
     expect((await screen.findByRole("alert")).textContent).toContain("Could not log out");
     expect(router.state.location.pathname).toBe("/khata");
-    expect(screen.getByRole("button", { name: "Log out" })).toBeTruthy();
+    expect(screen.getByRole("menuitem", { name: "Log out" })).toBeTruthy();
   });
 });
 

@@ -7,7 +7,6 @@ export const hinglish: Messages = {
   "common.save": "Save karo",
   "common.saving": "Save ho raha hai…",
   "common.saved": "Save ho gaya.",
-  "common.soon": "Jald",
   "common.comingSoon": "Jald aa raha hai",
   "common.availableToday": "Abhi available",
 
@@ -15,14 +14,9 @@ export const hinglish: Messages = {
   "app.apiUnreachable": "DukaanOS API se connect nahi ho pa raha. Backend chal raha hai kya?",
 
   "nav.dashboard": "Dashboard",
-  "nav.overview": "Ek nazar mein",
   "nav.opportunities": "Mauke",
   "nav.analytics": "Analytics",
   "nav.counter": "Counter",
-  "nav.visionCounter": "Vision Counter",
-  "nav.byCode": "Code se",
-  "nav.parchi": "Parchi",
-  "nav.voiceBilling": "Bolkar Billing",
   "nav.manualBilling": "Manual Billing",
   "nav.returns": "Wapsi",
   "nav.catalogue": "Catalogue",
@@ -39,6 +33,7 @@ export const hinglish: Messages = {
   "nav.ledger": "Bahi",
   "nav.outstanding": "Bakaya",
   "nav.payments": "Payments",
+  "nav.insights": "Insights",
 
   "shell.menu": "Menu",
   "shell.home": "DukaanOS, Dashboard par jao",

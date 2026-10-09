@@ -62,7 +62,7 @@ export function DetectionReview({ rows, setRows, products, emptyText, onConfirm,
           type="button"
           disabled={plan.items.length === 0 || plan.invalid || confirm.isPending}
           onClick={() => confirm.mutate(plan.items)}
-          className="shrink-0 rounded-lg bg-emerald-600 px-4 py-2 font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
+          className="shrink-0 rounded-full bg-emerald-600 px-4 py-2 font-semibold text-white hover:bg-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400"
         >
           {confirm.isPending ? t("review.adding") : t("review.addToBill", { count: plan.items.length })}
         </button>
@@ -179,7 +179,7 @@ function Resolve({ row, products, onPick }: { row: ReviewRow; products: Product[
         onChange={(e) => setQuery(e.target.value)}
         placeholder={t("vision.searchCatalog")}
         aria-label={t("review.findFor", { text: detection.label ?? t("vision.aDetection") })}
-        className="mt-2 w-full rounded-lg border border-slate-300 bg-white px-2 py-1 text-sm focus:border-emerald-600 focus:outline-none"
+        className="mt-2 w-full rounded-xl border border-slate-300 bg-white px-2 py-1 text-sm focus:border-emerald-600 focus:outline-none"
       />
       {results.length > 0 && (
         <div className="mt-1 flex flex-wrap gap-1">

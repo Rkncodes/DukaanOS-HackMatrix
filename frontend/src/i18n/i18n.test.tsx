@@ -96,7 +96,7 @@ describe("choosing the app language", () => {
       ["gu", "ગુજરાતી"],
     ]);
     expect(document.documentElement.lang).toBe("en");
-    expect(sections()).toEqual(["Counter", "Shop", "Khata"]);
+    expect(sections()).toEqual(["Dashboard", "Counter", "Catalogue", "Shop", "Khata", "Insights"]);
   });
 
   it("changes the whole screen at once, without a reload, and stays on every route", async () => {
@@ -106,8 +106,10 @@ describe("choosing the app language", () => {
     await user.selectOptions(languageBox(), "hi");
     // Nothing was reloaded or re-requested: the same mounted page now reads in Hindi.
     expect(screen.getByRole("heading", { name: "दुकान की सेटिंग" })).toBeTruthy();
-    expect(sections()).toEqual(["काउंटर", "दुकान", "खाता"]);
-    expect(screen.getByRole("button", { name: "लॉग आउट" })).toBeTruthy();
+    expect(sections()).toEqual(["डैशबोर्ड", "काउंटर", "कैटलॉग", "दुकान", "खाता", "इनसाइट्स"]);
+    await user.click(screen.getByRole("button", { name: /Ramesh General Store/ }));
+    expect(screen.getByRole("menuitem", { name: "लॉग आउट" })).toBeTruthy();
+    await user.keyboard("{Escape}");
     expect(screen.getByRole("link", { name: "अवसर, 2 खुले" })).toBeTruthy(); // the number is the app's, the words are Hindi
     expect(document.documentElement.lang).toBe("hi");
     expect(screen.queryByText("Store settings")).toBeNull();
@@ -119,12 +121,12 @@ describe("choosing the app language", () => {
     expect(screen.getByRole("button", { name: "बोलकर जोड़ें" })).toBeTruthy();
     await act(() => router.navigate("/counter/returns"));
     expect(await screen.findByText("जल्द आ रहा है")).toBeTruthy();
-    expect(screen.getAllByRole("link", { name: "मैनुअल बिलिंग" })).toHaveLength(2); // in the sidebar and on the page
+    expect(screen.getAllByRole("link", { name: "मैनुअल बिलिंग" })).toHaveLength(1); // on the page: the Counter lists no pages under the top bar
 
     await act(() => router.navigate("/settings"));
     await user.selectOptions(languageBox(), "ta");
     expect(screen.getByRole("heading", { name: "கடை அமைப்புகள்" })).toBeTruthy();
-    expect(sections()).toEqual(["கவுண்டர்", "கடை", "கணக்கு"]);
+    expect(sections()).toEqual(["டாஷ்போர்டு", "கவுண்டர்", "பட்டியல்", "கடை", "கணக்கு", "நுண்ணறிவுகள்"]);
     await user.selectOptions(languageBox(), "en");
     expect(screen.getByRole("heading", { name: "Store settings" })).toBeTruthy();
   });
@@ -218,11 +220,11 @@ describe("app language and Voice Billing's language", () => {
       expect(localStorage.getItem(VOICE_KEY)).toBe("hi");
       expect(localStorage.getItem(APP_LANGUAGE_KEY)).toBe("ta");
       expect(getAppLanguage()).toBe("ta");
-      expect(sections()).toEqual(["கவுண்டர்", "கடை", "கணக்கு"]);
+      expect(sections()).toEqual(["டாஷ்போர்டு", "கவுண்டர்", "பட்டியல்", "கடை", "கணக்கு", "நுண்ணறிவுகள்"]);
 
       // And changing the app's language back does not change what Voice listens for.
       act(() => setAppLanguage("en"));
-      expect(sections()).toEqual(["Counter", "Shop", "Khata"]);
+      expect(sections()).toEqual(["Dashboard", "Counter", "Catalogue", "Shop", "Khata", "Insights"]);
       expect(voice.value).toBe("hi");
       await user.click(screen.getByRole("button", { name: "Speak again" }));
       expect(Recognition.made.at(-1)!.lang).toBe("hi-IN");
@@ -235,7 +237,7 @@ describe("app language and Voice Billing's language", () => {
 describe("billing at the Counter, in English and in Hindi", () => {
   const WORDS = {
     en: {
-      nav: ["Counter", "Shop", "Khata"],
+      nav: ["Dashboard", "Counter", "Catalogue", "Shop", "Khata", "Insights"],
       search: "Scan barcode or search product",
       none: "No products match.",
       noMatch: "No product matches “zzz”",
@@ -252,7 +254,7 @@ describe("billing at the Counter, in English and in Hindi", () => {
       increase: `Increase ${maggi.name}`,
     },
     hi: {
-      nav: ["काउंटर", "दुकान", "खाता"],
+      nav: ["डैशबोर्ड", "काउंटर", "कैटलॉग", "दुकान", "खाता", "इनसाइट्स"],
       search: "बारकोड स्कैन करें या प्रोडक्ट खोजें",
       none: "कोई प्रोडक्ट नहीं मिला।",
       noMatch: "“zzz” से कोई प्रोडक्ट नहीं मिला",

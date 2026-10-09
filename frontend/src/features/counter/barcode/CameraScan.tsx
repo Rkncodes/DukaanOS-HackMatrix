@@ -163,19 +163,19 @@ export function CameraScan({ onDetected, scanEveryMs = SCAN_EVERY_MS }: Props) {
           <button
             type="button"
             onClick={start}
-            className="flex items-center gap-2 rounded-lg bg-emerald-600 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
+            className="flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
           >
             <Icon name="camera" className="h-5 w-5" />
             {phase.name === "error" ? t("barcode.tryCamera") : t("barcode.startCamera")}
           </button>
         )}
         {phase.name === "read" && (
-          <button type="button" onClick={next} className="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
+          <button type="button" onClick={next} className="rounded-full bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">
             {t("barcode.scanNext")}
           </button>
         )}
         {live && (
-          <button type="button" onClick={stop} className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+          <button type="button" onClick={stop} className="rounded-full border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
             {t("camera.stop")}
           </button>
         )}
