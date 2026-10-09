@@ -197,14 +197,18 @@ def list_orders(
     channel: Channel | None = None,
     status: OrderStatus | None = None,
     since: datetime | None = None,
+    until: datetime | None = None,
     limit: int | None = 50,
 ) -> list[Order]:
-    """Newest first. `since` keeps orders created at or after that moment; limit=None reads them all."""
+    """Newest first. `since` keeps orders created at or after that moment, `until` before it;
+    limit=None reads them all."""
     stmt = scoped(Order, ctx).order_by(Order.created_at.desc())
     if limit is not None:
         stmt = stmt.limit(limit)
     if since is not None:
         stmt = stmt.where(Order.created_at >= since)
+    if until is not None:
+        stmt = stmt.where(Order.created_at < until)
     if customer_id is not None:
         stmt = stmt.where(Order.customer_id == customer_id)
     if channel is not None:

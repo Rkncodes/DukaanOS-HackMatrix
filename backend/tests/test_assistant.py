@@ -20,6 +20,7 @@ import pytest
 from pydantic import ValidationError
 from sqlalchemy import update
 
+from app.core.clock import store_now
 from app.core.config import Settings, settings
 from app.core.db import utcnow
 from app.core.tenancy import TenantContext
@@ -39,6 +40,9 @@ READ_TOOLS = {
     "get_customer_outstanding",
     "get_product_stock",
     "get_product_price",
+    "get_product_sales_today",
+    "get_sales_on_date",
+    "get_top_selling_products",
     "get_customer_list",
     "get_low_stock_products",
 }
@@ -202,6 +206,46 @@ def test_product_tools_read_the_catalogue(store, db):
     assert [c["customer"] for c in customers["customers"]] == ["Aman Verma", "Priya Singh", "Rahul Sharma"]
 
 
+def test_sales_on_date_tool_reads_a_specific_past_day(store, db):
+    yesterday = (store_now() - timedelta(days=1)).date()
+    sales = execute_tool(db, store["ctx"], "get_sales_on_date", {"date": yesterday.isoformat()})
+    assert sales["date"] == yesterday.isoformat()
+    assert sales["total_sales"] == "140.00" and sales["completed_sales"] == 1  # yesterday's cash sale of 10 Maggi
+    assert (sales["paid_amount"], sales["on_khata_amount"]) == ("140.00", "0.00")
+
+    nothing = execute_tool(db, store["ctx"], "get_sales_on_date", {"date": "2000-01-01"})
+    assert nothing["total_sales"] == "0.00" and nothing["completed_sales"] == 0
+
+    with pytest.raises(ValidationError):
+        execute_tool(db, store["ctx"], "get_sales_on_date", {"date": (store_now().date() + timedelta(days=1)).isoformat()})
+
+
+def test_product_sales_today_tool_reads_only_todays_completed_orders(store, db):
+    # 2 cash + 3 khata today (both "Maggi 2-Minute Noodles 70g"); yesterday's 10 and the unaccepted
+    # online order's 1 (still pending, a different size) do not count.
+    sold = execute_tool(db, store["ctx"], "get_product_sales_today", {"product": "maggi"})
+    assert sold["found"] is True
+    assert sold["matches"] == [{"product": "Maggi 2-Minute Noodles 70g", "quantity_sold": "5", "revenue": "70.00"}]
+
+    assert execute_tool(db, store["ctx"], "get_product_sales_today", {"product": "Coke"}) == {
+        "date": sold["date"], "found": False, "currency": "INR", "matches": [],
+    }  # fmt: skip
+
+
+def test_top_selling_products_tool_ranks_by_quantity_sold(store, db):
+    # Maggi 70g: 2 today (cash) + 3 today (khata) + 10 yesterday = 15 units, all at 14.00 = 210.00.
+    # Coke and Maggi 35g never sold; the pending online order for Maggi 70g isn't completed.
+    top = execute_tool(db, store["ctx"], "get_top_selling_products", {})
+    assert top["days"] == 30 and top["products_sold"] == 1 and top["list_is_complete"] is True
+    assert top["top_products"] == [{"product": "Maggi 2-Minute Noodles 70g", "quantity_sold": "15", "revenue": "210.00"}]
+
+    today_only = execute_tool(db, store["ctx"], "get_top_selling_products", {"days": 1})
+    assert today_only["top_products"] == [{"product": "Maggi 2-Minute Noodles 70g", "quantity_sold": "5", "revenue": "70.00"}]
+
+    with pytest.raises(ValidationError):
+        execute_tool(db, store["ctx"], "get_top_selling_products", {"days": 0})
+
+
 def test_tool_arguments_are_validated(store, db):
     ctx = store["ctx"]
     with pytest.raises(ValidationError):
@@ -221,7 +265,10 @@ def test_tools_only_ever_see_the_callers_merchant(store, client_b, db):
     assert execute_tool(db, ctx_b, "get_customer_outstanding", {"customer": "Rahul Sharma"})["found"] is False
     assert execute_tool(db, ctx_b, "get_product_stock", {"product": "Maggi"})["found"] is False
     assert execute_tool(db, ctx_b, "get_product_price", {"product": "Coke"})["found"] is False
+    assert execute_tool(db, ctx_b, "get_product_sales_today", {"product": "Maggi"})["found"] is False
     assert execute_tool(db, ctx_b, "get_today_sales", {})["total_sales"] == "0.00"
+    assert execute_tool(db, ctx_b, "get_sales_on_date", {"date": "2000-01-01"})["total_sales"] == "0.00"
+    assert execute_tool(db, ctx_b, "get_top_selling_products", {})["top_products"] == []
     assert execute_tool(db, ctx_b, "get_today_orders", {})["total_orders_today"] == 0
     assert execute_tool(db, ctx_b, "get_total_outstanding", {})["total_outstanding"] == "0.00"
     assert execute_tool(db, ctx_b, "get_customer_list", {})["total_customers"] == 0
@@ -267,6 +314,9 @@ def test_settings_without_a_key_mean_no_provider():
         ("राहुल शर्मा का कितना उधार है?", "get_customer_outstanding", {"customer": "Rahul Sharma"}, ("found", True)),
         ("Maggi ka stock kitna hai?", "get_product_stock", {"product": "Maggi"}, ("found", True)),
         ("कोक का क्या रेट है?", "get_product_price", {"product": "Coke"}, ("found", True)),
+        ("Aaj Maggi kitni biki?", "get_product_sales_today", {"product": "Maggi"}, ("found", True)),
+        ("Kal kitni bikri hui thi?", "get_sales_on_date", {"date": "2000-01-01"}, ("total_sales", "0.00")),
+        ("What are my best selling products?", "get_top_selling_products", {}, ("products_sold", 1)),
         ("Kitne customers hain?", "get_customer_list", {}, ("total_customers", 3)),
         ("Kaunsa stock low hai?", "get_low_stock_products", {}, ("low_stock_products", 2)),
     ],
@@ -488,6 +538,9 @@ LIVE = [
     ("How much does Rahul Sharma owe me?", "get_customer_outstanding"),
     ("How much stock is left for Maggi?", "get_product_stock"),
     ("What is the price of Coke?", "get_product_price"),
+    ("How many Maggi did I sell today?", "get_product_sales_today"),
+    ("How much did I sell yesterday?", "get_sales_on_date"),
+    ("What are my best selling products?", "get_top_selling_products"),
     ("How many customers do I have?", "get_customer_list"),
     ("Which products are low in stock?", "get_low_stock_products"),
     ("आज कितनी बिक्री हुई?", "get_today_sales"),
@@ -496,6 +549,7 @@ LIVE = [
     ("राहुल शर्मा का कितना उधार है?", "get_customer_outstanding"),
     ("मैगी का कितना स्टॉक बचा है?", "get_product_stock"),
     ("कोक का क्या रेट है?", "get_product_price"),
+    ("आज मैगी कितनी बिकी?", "get_product_sales_today"),
     ("मेरे कितने ग्राहक हैं?", "get_customer_list"),
     ("कौन से सामान का स्टॉक कम है?", "get_low_stock_products"),
     ("Aaj kitni bikri hui?", "get_today_sales"),
@@ -506,6 +560,9 @@ LIVE = [
     ("Rahul Sharma ka kitna udhaar hai?", "get_customer_outstanding"),
     ("Maggi ka stock kitna hai?", "get_product_stock"),
     ("Coke ka rate kya hai?", "get_product_price"),
+    ("Aaj Maggi kitni biki?", "get_product_sales_today"),
+    ("Kal kitni bikri hui thi?", "get_sales_on_date"),
+    ("Sabse zyada bikne wala kaunsa product hai?", "get_top_selling_products"),
     ("Kitne customers hain?", "get_customer_list"),
     ("Kaunsa stock low hai?", "get_low_stock_products"),
 ]
@@ -686,3 +743,7 @@ def test_live_model_picks_the_right_tool(live_groq, question, tool):
         assert "maggi" in response.tool_calls[0].arguments["product"].casefold()
     if tool == "get_product_price":
         assert "coke" in response.tool_calls[0].arguments["product"].casefold()
+    if tool == "get_product_sales_today":
+        assert "maggi" in response.tool_calls[0].arguments["product"].casefold()
+    if tool == "get_sales_on_date":
+        assert response.tool_calls[0].arguments["date"] == (store_now().date() - timedelta(days=1)).isoformat()

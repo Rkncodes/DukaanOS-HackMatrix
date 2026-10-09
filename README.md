@@ -29,7 +29,8 @@ cp .env.example .env
 uv sync
 uv run alembic upgrade head
 uv run python -m app.seed            # demo store; add --reset to recreate
-uv run fastapi dev app/main.py       # or: uv run uvicorn app.main:app --reload
+uv run fastapi dev app/main.py --reload-dir app   # --reload-dir keeps the watcher off .venv (huge, makes reload hang on Windows)
+# or: uv run uvicorn app.main:app --reload --reload-dir app
 
 # 3. Frontend  →  http://localhost:5173
 cd frontend
