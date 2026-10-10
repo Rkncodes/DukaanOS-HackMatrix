@@ -29,6 +29,9 @@ const EXAMPLES: { text: string; lang: "hi" | "en" }[] = [
 /** Which of the store's records an answer was read from, in the merchant's words. */
 const SOURCES: Record<string, "sales" | "orders" | "khata" | "customers" | "stock" | "prices" | "products"> = {
   get_today_sales: "sales",
+  get_sales_on_date: "sales",
+  get_product_sales_today: "sales",
+  get_top_selling_products: "products",
   get_today_orders: "orders",
   get_total_outstanding: "khata",
   get_customer_outstanding: "khata",

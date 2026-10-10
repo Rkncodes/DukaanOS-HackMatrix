@@ -11,13 +11,15 @@ import re
 import uuid
 from collections.abc import Callable
 from dataclasses import dataclass
+from datetime import date as Date
+from datetime import datetime, time, timedelta
 from decimal import Decimal
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
 from sqlalchemy.orm import Session
 
-from app.core.clock import store_day_start, store_now
+from app.core.clock import store_day_start, store_now, store_timezone
 from app.core.enums import Channel, InputSource, OrderStatus, PaymentMethod, PaymentStatus
 from app.core.errors import NotFound
 from app.core.tenancy import TenantContext
@@ -134,6 +136,25 @@ class LowStockArgs(BaseModel):
     threshold: int = Field(default=LOW_STOCK, ge=0, le=100_000, description="Stock below this counts as low")
 
 
+class DateArgs(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    date: Date = Field(description="The day to report on, as YYYY-MM-DD. Today's own sales use get_today_sales instead.")
+
+    @field_validator("date")
+    @classmethod
+    def _not_in_the_future(cls, value: Date) -> Date:
+        if value > store_now().date():
+            raise ValueError("date cannot be in the future")
+        return value
+
+
+class TopSellingArgs(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    days: int = Field(default=30, ge=1, le=365, description="How many days back to look, ending today")
+
+
 def _money(amount: Decimal) -> str:
     return str(amount.quantize(Decimal("0.01")))
 
@@ -157,16 +178,20 @@ def _todays_orders(db: Session, ctx: TenantContext) -> list[Order]:
     return orders.list_orders(db, ctx, since=store_day_start(), limit=None)
 
 
-def _today_sales(db: Session, ctx: TenantContext, args: NoArgs) -> dict:
+def _day_bounds(day: Date) -> tuple[datetime, datetime]:
+    start = datetime.combine(day, time.min, tzinfo=store_timezone())
+    return start, start + timedelta(days=1)
+
+
+def _sales_breakdown(all_orders: list[Order]) -> dict:
     """Sales are completed orders: paid ones and those put on khata. Same rule as the Dashboard."""
-    sold = [o for o in _todays_orders(db, ctx) if o.status == OrderStatus.COMPLETED]
+    sold = [o for o in all_orders if o.status == OrderStatus.COMPLETED]
     on_khata = [o for o in sold if o.payment_status == PaymentStatus.CREDIT]
 
     def total(some: list[Order]) -> str:
         return _money(sum((o.total for o in some), Decimal(0)))
 
     return {
-        "date": store_now().date().isoformat(),
         "currency": "INR",
         "total_sales": total(sold),
         "completed_sales": len(sold),
@@ -176,6 +201,16 @@ def _today_sales(db: Session, ctx: TenantContext, args: NoArgs) -> dict:
         "counter_amount": total([o for o in sold if o.channel == Channel.COUNTER]),
         "shop_amount": total([o for o in sold if o.channel == Channel.SHOP]),
     }
+
+
+def _today_sales(db: Session, ctx: TenantContext, args: NoArgs) -> dict:
+    return {"date": store_now().date().isoformat(), **_sales_breakdown(_todays_orders(db, ctx))}
+
+
+def _sales_on_date(db: Session, ctx: TenantContext, args: DateArgs) -> dict:
+    start, end = _day_bounds(args.date)
+    day_orders = orders.list_orders(db, ctx, since=start, until=end, limit=None)
+    return {"date": args.date.isoformat(), **_sales_breakdown(day_orders)}
 
 
 def _today_orders(db: Session, ctx: TenantContext, args: NoArgs) -> dict:
@@ -237,6 +272,51 @@ def _product_stock(db: Session, ctx: TenantContext, args: ProductNameArgs) -> di
     }
 
 
+def _sold_by_product(all_orders: list[Order], *, matching: str | None = None) -> dict[str, dict]:
+    """Units and revenue per product name, from completed orders' line items. `matching` narrows to
+    one product by name (as _named does elsewhere); omit it to group every product that sold."""
+    by_product: dict[str, dict] = {}
+    for order in all_orders:
+        if order.status != OrderStatus.COMPLETED:
+            continue
+        for item in order.items:
+            if matching is not None and not _named(matching, item.product_name):
+                continue
+            row = by_product.setdefault(item.product_name, {"quantity": Decimal(0), "revenue": Decimal(0)})
+            row["quantity"] += item.quantity
+            row["revenue"] += item.line_total
+    return by_product
+
+
+def _product_sales_today(db: Session, ctx: TenantContext, args: ProductNameArgs) -> dict:
+    by_product = _sold_by_product(_todays_orders(db, ctx), matching=args.product)
+    return {
+        "date": store_now().date().isoformat(),
+        "found": bool(by_product),
+        "currency": "INR",
+        "matches": [
+            {"product": name, "quantity_sold": _quantity(row["quantity"]), "revenue": _money(row["revenue"])}
+            for name, row in by_product.items()
+        ],
+    }
+
+
+def _top_selling_products(db: Session, ctx: TenantContext, args: TopSellingArgs) -> dict:
+    since = store_day_start() - timedelta(days=args.days - 1)
+    by_product = _sold_by_product(orders.list_orders(db, ctx, since=since, limit=None))
+    ranked = sorted(by_product.items(), key=lambda kv: kv[1]["quantity"], reverse=True)
+    return {
+        "days": args.days,
+        "currency": "INR",
+        "products_sold": len(ranked),
+        "top_products": [
+            {"product": name, "quantity_sold": _quantity(row["quantity"]), "revenue": _money(row["revenue"])}
+            for name, row in ranked[:MOST]
+        ],
+        "list_is_complete": len(ranked) <= MOST,
+    }
+
+
 def _product_price(db: Session, ctx: TenantContext, args: ProductNameArgs) -> dict:
     matches = _matching_products(db, ctx, args.product)
     return {
@@ -290,6 +370,14 @@ TOOLS: dict[str, Tool] = {
             False,
         ),
         Tool(
+            "get_sales_on_date",
+            "Sales on a specific past day, not today: total amount, number of completed sales, how "
+            "much was paid and how much went on khata. For today's own sales use get_today_sales.",
+            DateArgs,
+            _sales_on_date,
+            False,
+        ),
+        Tool(
             "get_today_orders",
             "How many orders came today: counter bills, online shop orders, and online orders still waiting",
             NoArgs,
@@ -312,6 +400,20 @@ TOOLS: dict[str, Tool] = {
         ),
         Tool("get_product_stock", "How much stock is left of a product, found by name", ProductNameArgs, _product_stock, False),
         Tool("get_product_price", "The selling price (rate) of a product, found by name", ProductNameArgs, _product_price, False),
+        Tool(
+            "get_product_sales_today",
+            "How many units of one product sold today, and the revenue from it, found by name",
+            ProductNameArgs,
+            _product_sales_today,
+            False,
+        ),
+        Tool(
+            "get_top_selling_products",
+            "The store's best-selling products by units sold, over a recent number of days (default 30)",
+            TopSellingArgs,
+            _top_selling_products,
+            False,
+        ),
         Tool("get_customer_list", "How many customers the store has, and who they are", NoArgs, _customer_list, False),
         Tool(
             "get_low_stock_products",
